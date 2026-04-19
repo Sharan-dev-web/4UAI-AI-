@@ -12,105 +12,54 @@
   --text:#dfe3f5;--muted:#556080;--muted2:#8892b0;
   --groq:#f97316;--groq2:#fb923c;
   --acc:#6366f1;--acc2:#8b5cf6;
-  --glow:rgba(99,102,241,0.14);
+  --gf-color:#f472b6;--gf-rgb:244,114,182;
+  --bf-color:#38bdf8;--bf-rgb:56,189,248;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{height:100%;background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow:hidden}
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
-  background:
-    radial-gradient(ellipse 80% 55% at 10% -10%,rgba(249,115,22,0.08) 0%,transparent 55%),
-    radial-gradient(ellipse 60% 45% at 90% 110%,rgba(99,102,241,0.09) 0%,transparent 55%)}
+  background:radial-gradient(ellipse 80% 55% at 10% -10%,rgba(249,115,22,0.08) 0%,transparent 55%),
+             radial-gradient(ellipse 60% 45% at 90% 110%,rgba(99,102,241,0.09) 0%,transparent 55%)}
 #app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;max-width:500px;margin:0 auto}
 
-/* ═══════════════════════════════
-   SCREEN SYSTEM
-═══════════════════════════════ */
+/* ═══ SCREENS ═══ */
 .screen{position:fixed;inset:0;z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg);overflow-y:auto}
 .screen::before{content:'';position:fixed;inset:0;pointer-events:none;
   background:radial-gradient(ellipse 80% 55% at 10% -10%,rgba(249,115,22,0.08) 0%,transparent 55%),
              radial-gradient(ellipse 60% 45% at 90% 110%,rgba(99,102,241,0.09) 0%,transparent 55%)}
 .screen.hidden{display:none}
-
-/* shared card */
 .card{position:relative;z-index:1;background:var(--s1);border:1px solid var(--border2);border-radius:26px;
   padding:30px 22px;width:100%;max-width:420px;
   box-shadow:0 40px 100px rgba(0,0,0,0.65),0 0 0 1px rgba(249,115,22,0.06);
   animation:fadeUp 0.45s cubic-bezier(0.23,1,0.32,1) both}
-
-/* logo row */
 .logo-row{display:flex;align-items:center;justify-content:center;gap:11px;margin-bottom:26px}
-.logomark{width:50px;height:50px;border-radius:17px;
-  background:linear-gradient(135deg,var(--groq),var(--acc2));
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:#fff;
-  box-shadow:0 8px 26px rgba(249,115,22,0.35);animation:float 4s ease-in-out infinite}
-.wordmark{font-family:'Syne',sans-serif;font-weight:800;font-size:26px;letter-spacing:-1px;
-  background:linear-gradient(135deg,#fff 0%,var(--groq) 55%,var(--acc2) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-
-/* ═══════════════════════════════
-   SCREEN 1 — API KEY
-═══════════════════════════════ */
-.groq-badge{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.22);
-  border-radius:14px;padding:11px 16px;margin-bottom:20px;
-}
-.groq-badge .gb-icon{font-size:22px}
-.groq-badge .gb-text{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--groq)}
-.groq-badge .gb-sub{font-size:11px;color:var(--muted2);margin-top:1px}
-
+.logomark{width:50px;height:50px;border-radius:17px;background:linear-gradient(135deg,var(--groq),var(--acc2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:17px;color:#fff;box-shadow:0 8px 26px rgba(249,115,22,0.35);animation:float 4s ease-in-out infinite}
+.wordmark{font-family:'Syne',sans-serif;font-weight:800;font-size:26px;letter-spacing:-1px;background:linear-gradient(135deg,#fff 0%,var(--groq) 55%,var(--acc2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.groq-badge{display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(249,115,22,0.08);border:1px solid rgba(249,115,22,0.22);border-radius:14px;padding:11px 16px;margin-bottom:20px}
+.gb-icon{font-size:22px}.gb-text{font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--groq)}.gb-sub{font-size:11px;color:var(--muted2);margin-top:1px}
 .screen-title{font-family:'Syne',sans-serif;font-weight:700;font-size:17px;margin-bottom:6px;text-align:center}
 .screen-sub{font-size:13px;color:var(--muted2);text-align:center;line-height:1.6;margin-bottom:22px}
-
 .field-label{font-size:12px;font-weight:600;color:var(--muted2);margin-bottom:7px;display:flex;align-items:center;justify-content:space-between}
-.field-label a{color:var(--groq);text-decoration:none;font-size:11px;font-weight:500}
-
+.field-label a{color:var(--groq);text-decoration:none;font-size:11px}
 .input-wrap{position:relative;margin-bottom:8px}
-.txt-input{
-  width:100%;background:var(--s2);border:1.5px solid var(--border2);border-radius:13px;
-  padding:13px 44px 13px 15px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);
-  outline:none;transition:border-color 0.2s,box-shadow 0.2s;
-}
+.txt-input{width:100%;background:var(--s2);border:1.5px solid var(--border2);border-radius:13px;padding:13px 44px 13px 15px;font-family:'Plus Jakarta Sans',sans-serif;font-size:14px;color:var(--text);outline:none;transition:border-color 0.2s,box-shadow 0.2s}
 .txt-input:focus{border-color:rgba(249,115,22,0.45);box-shadow:0 0 0 3px rgba(249,115,22,0.07)}
 .txt-input.err{border-color:#f87171}
 .eye-btn{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--muted);font-size:17px;padding:3px}
-
 .help-row{display:flex;gap:8px;margin-bottom:18px}
-.help-link{
-  flex:1;display:flex;align-items:center;justify-content:center;gap:6px;
-  background:var(--s2);border:1px solid var(--border2);border-radius:11px;padding:10px 8px;
-  text-decoration:none;color:var(--muted2);font-size:11.5px;font-weight:500;
-  transition:border-color 0.2s,color 0.2s;cursor:pointer;
-}
+.help-link{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;background:var(--s2);border:1px solid var(--border2);border-radius:11px;padding:10px 8px;text-decoration:none;color:var(--muted2);font-size:11.5px;font-weight:500;transition:border-color 0.2s,color 0.2s;cursor:pointer}
 .help-link:active{border-color:rgba(249,115,22,0.3);color:var(--groq)}
-.help-link .hl-icon{font-size:16px}
-
+.hl-icon{font-size:16px}
 .err-txt{font-size:12px;color:#f87171;margin-bottom:14px;display:none;padding:0 2px}
 .err-txt.show{display:block}
-
-.primary-btn{
-  width:100%;padding:15px;border-radius:14px;border:none;
-  background:linear-gradient(135deg,var(--groq),var(--acc2));
-  font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff;cursor:pointer;
-  box-shadow:0 8px 26px rgba(249,115,22,0.35);transition:transform 0.15s,box-shadow 0.15s;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-}
-.primary-btn:active{transform:scale(0.97);box-shadow:0 4px 14px rgba(249,115,22,0.25)}
-
+.primary-btn{width:100%;padding:15px;border-radius:14px;border:none;background:linear-gradient(135deg,var(--groq),var(--acc2));font-family:'Syne',sans-serif;font-weight:700;font-size:15px;color:#fff;cursor:pointer;box-shadow:0 8px 26px rgba(249,115,22,0.35);transition:transform 0.15s,box-shadow 0.15s;display:flex;align-items:center;justify-content:center;gap:8px}
+.primary-btn:active{transform:scale(0.97)}
 .security-note{margin-top:14px;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.55}
 .security-note strong{color:var(--muted2)}
 
-/* ═══════════════════════════════
-   SCREEN 2 — MODE SELECT
-═══════════════════════════════ */
+/* MODE SELECT */
 .mode-grid{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
-.mode-btn{
-  display:flex;align-items:center;gap:14px;
-  padding:14px 16px;border-radius:15px;
-  background:var(--s2);border:1.5px solid var(--border2);
-  cursor:pointer;transition:all 0.2s;text-align:left;
-}
+.mode-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:15px;background:var(--s2);border:1.5px solid var(--border2);cursor:pointer;transition:all 0.2s;text-align:left}
 .mode-btn:active{transform:scale(0.98)}
 .mode-btn.selected{border-color:var(--mb-color,var(--acc));background:rgba(var(--mb-rgb,99,102,241),0.09)}
 .mode-icon{font-size:24px;flex-shrink:0;width:40px;height:40px;border-radius:12px;display:flex;align-items:center;justify-content:center;background:rgba(var(--mb-rgb,99,102,241),0.12)}
@@ -119,48 +68,23 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .mode-desc{font-size:12px;color:var(--muted2);line-height:1.4}
 .mode-check{width:20px;height:20px;border-radius:50%;border:1.5px solid var(--border2);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:10px;transition:all 0.2s}
 .mode-btn.selected .mode-check{background:var(--mb-color,var(--acc));border-color:var(--mb-color,var(--acc));color:#fff}
-
 .mode-btn[data-m="normal"]{--mb-color:#6366f1;--mb-rgb:99,102,241}
 .mode-btn[data-m="girlfriend"]{--mb-color:#f472b6;--mb-rgb:244,114,182}
 .mode-btn[data-m="boyfriend"]{--mb-color:#38bdf8;--mb-rgb:56,189,248}
 .mode-btn[data-m="hacker"]{--mb-color:#4ade80;--mb-rgb:74,222,128}
 .mode-btn[data-m="custom"]{--mb-color:#fb923c;--mb-rgb:251,146,60}
-
-/* custom textarea */
-.custom-area{
-  display:none;margin-top:-2px;margin-bottom:6px;
-  background:var(--s2);border:1.5px solid rgba(251,146,60,0.3);border-radius:13px;
-  padding:12px 15px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;color:var(--text);
-  outline:none;resize:none;width:100%;min-height:80px;line-height:1.55;
-  transition:border-color 0.2s;
-}
+.custom-area{display:none;margin-top:-2px;margin-bottom:6px;background:var(--s2);border:1.5px solid rgba(251,146,60,0.3);border-radius:13px;padding:12px 15px;font-family:'Plus Jakarta Sans',sans-serif;font-size:13.5px;color:var(--text);outline:none;resize:none;width:100%;min-height:80px;line-height:1.55;transition:border-color 0.2s}
 .custom-area:focus{border-color:rgba(251,146,60,0.5)}
 .custom-area.visible{display:block;animation:fadeUp 0.2s ease both}
 
-/* ═══════════════════════════════
-   HEADER
-═══════════════════════════════ */
-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:13px 16px 11px;
-  border-bottom:1px solid var(--border);
-  background:rgba(6,7,15,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  flex-shrink:0;gap:8px;
-  animation:slideDown 0.5s cubic-bezier(0.23,1,0.32,1) both;
-}
+/* ═══ HEADER ═══ */
+header{display:flex;align-items:center;justify-content:space-between;padding:13px 16px 11px;border-bottom:1px solid var(--border);background:rgba(6,7,15,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);flex-shrink:0;gap:8px;animation:slideDown 0.5s cubic-bezier(0.23,1,0.32,1) both}
 .hdr-brand{display:flex;flex-direction:column;gap:3px}
-.hdr-name{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.5px;line-height:1;
-  background:linear-gradient(135deg,#fff 0%,var(--groq) 55%,var(--acc2) 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hdr-badge{display:inline-flex;align-items:center;gap:4px;
-  background:rgba(249,115,22,0.10);border:1px solid rgba(249,115,22,0.2);border-radius:20px;
-  padding:2px 8px 2px 6px;font-size:10px;font-weight:600;color:var(--groq);width:fit-content}
+.hdr-name{font-family:'Syne',sans-serif;font-weight:800;font-size:20px;letter-spacing:-0.5px;line-height:1;background:linear-gradient(135deg,#fff 0%,var(--groq) 55%,var(--acc2) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hdr-badge{display:inline-flex;align-items:center;gap:4px;background:rgba(249,115,22,0.10);border:1px solid rgba(249,115,22,0.2);border-radius:20px;padding:2px 8px 2px 6px;font-size:10px;font-weight:600;color:var(--groq);width:fit-content}
 .hdr-dot{width:5px;height:5px;border-radius:50%;background:var(--groq);animation:pulse 2s ease-in-out infinite}
 .hdr-right{display:flex;align-items:center;gap:7px;flex-shrink:0}
-.mode-pill{
-  display:flex;align-items:center;gap:5px;border-radius:20px;padding:5px 10px;
-  font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:opacity 0.2s;white-space:nowrap;
-}
+.mode-pill{display:flex;align-items:center;gap:5px;border-radius:20px;padding:5px 10px;font-size:11px;font-weight:600;cursor:pointer;border:1px solid;transition:opacity 0.2s;white-space:nowrap}
 .mode-pill:active{opacity:0.7}
 .menu-btn{width:34px;height:34px;border-radius:10px;border:1px solid var(--border);background:var(--s1);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background 0.2s}
 .menu-btn:active{background:var(--s2)}
@@ -196,9 +120,29 @@ header{
 .new-chat-btn{margin:9px;padding:12px;border-radius:11px;border:1px dashed rgba(249,115,22,0.28);background:rgba(249,115,22,0.05);color:var(--groq);font-size:13px;font-weight:600;cursor:pointer;text-align:center;transition:background 0.2s}
 .new-chat-btn:active{background:rgba(249,115,22,0.10)}
 
+/* ═══ CHAT AREA ═══ */
+#chat-wrapper{position:relative;flex:1;display:flex;flex-direction:column;overflow:hidden}
+
+/* CHARACTER STAGE — girlfriend/boyfriend */
+.char-stage{
+  position:absolute;bottom:0;right:-10px;
+  width:200px;height:320px;
+  pointer-events:none;z-index:1;
+  transition:opacity 0.4s;
+  display:none;
+}
+.char-stage.visible{display:block}
+
 /* CHAT */
-#chat{flex:1;overflow-y:auto;padding:16px 13px 6px;display:flex;flex-direction:column;gap:13px;scroll-behavior:smooth}
+#chat{
+  flex:1;overflow-y:auto;padding:16px 13px 6px;
+  display:flex;flex-direction:column;gap:13px;
+  scroll-behavior:smooth;position:relative;z-index:2;
+}
 #chat::-webkit-scrollbar{display:none}
+
+/* In romance mode, shift messages left to give char space */
+#chat.has-char{padding-right:130px}
 
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:24px 14px;animation:fadeUp 0.55s cubic-bezier(0.23,1,0.32,1) both 0.1s}
 .w-orb{width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,var(--groq),var(--acc2));display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:19px;color:#fff;margin-bottom:16px;box-shadow:0 0 36px rgba(249,115,22,0.3);animation:float 4s ease-in-out infinite}
@@ -206,7 +150,7 @@ header{
 .welcome p{color:var(--muted2);font-size:13px;line-height:1.65;max-width:250px}
 .chips{display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-top:20px}
 .chip{padding:7px 12px;border-radius:20px;background:var(--s2);border:1px solid var(--border2);font-size:12px;color:var(--text);cursor:pointer;transition:all 0.2s}
-.chip:active{transform:scale(0.96);background:rgba(249,115,22,0.10);border-color:rgba(249,115,22,0.28)}
+.chip:active{transform:scale(0.96)}
 
 /* MESSAGES */
 .msg{display:flex;gap:8px;animation:fadeUp 0.3s cubic-bezier(0.23,1,0.32,1) both;max-width:100%}
@@ -218,13 +162,17 @@ header{
 .msg.ai .msg-bbl{background:var(--s1);border:1px solid var(--border);border-top-left-radius:4px}
 .msg.user .msg-bbl{background:var(--s2);border:1px solid rgba(249,115,22,0.15);border-top-right-radius:4px}
 
+/* GF bubble style */
+.gf-mode .msg.ai .msg-bbl{background:rgba(244,114,182,0.08);border-color:rgba(244,114,182,0.18)}
+.bf-mode .msg.ai .msg-bbl{background:rgba(56,189,248,0.08);border-color:rgba(56,189,248,0.18)}
+
 .typing-dots{display:flex;gap:4px;padding:3px 0;align-items:center}
 .typing-dots span{width:6px;height:6px;border-radius:50%;background:var(--groq);animation:blink 1.2s ease-in-out infinite}
 .typing-dots span:nth-child(2){animation-delay:0.2s}
 .typing-dots span:nth-child(3){animation-delay:0.4s}
 
 /* INPUT */
-.input-area{padding:9px 13px 20px;flex-shrink:0;background:rgba(6,7,15,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border)}
+.input-area{padding:9px 13px 20px;flex-shrink:0;background:rgba(6,7,15,0.85);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);position:relative;z-index:3}
 .input-bar{display:flex;align-items:flex-end;gap:9px;background:var(--s2);border:1.5px solid var(--border2);border-radius:16px;padding:9px 10px 9px 14px;transition:border-color 0.25s,box-shadow 0.25s}
 .input-bar:focus-within{border-color:rgba(249,115,22,0.4);box-shadow:0 0 0 3px rgba(249,115,22,0.07)}
 #input{flex:1;background:transparent;border:none;outline:none;font-family:'Plus Jakarta Sans',sans-serif;font-size:15px;color:var(--text);resize:none;max-height:105px;min-height:22px;line-height:1.5;overflow-y:auto}
@@ -234,6 +182,82 @@ header{
 #send-btn:disabled{opacity:0.28;box-shadow:none;cursor:default}
 #send-btn:not(:disabled):active{transform:scale(0.91)}
 
+/* ═══ SVG CHARACTER ANIMATIONS ═══ */
+/* emotion states control */
+.char-svg{ width:100%; height:100%; overflow:visible }
+
+/* body float */
+.char-body{ animation: charFloat 3.5s ease-in-out infinite; transform-origin: 50% 100% }
+
+/* blush circles */
+.blush{ opacity:0; transition: opacity 0.6s ease }
+.blush.show{ opacity:1 }
+
+/* sad droop */
+.char-head{ transition: transform 0.5s ease }
+.char-head.sad{ transform: rotate(8deg) translateY(4px) }
+.char-head.happy{ transform: rotate(-3deg) }
+
+/* heart particles */
+.heart-particle{ opacity:0; font-size:14px; animation:none }
+.heart-particle.burst{ animation: heartBurst 1.2s ease forwards }
+
+/* tears */
+.tear{ opacity:0; transition:opacity 0.3s }
+.tear.show{ opacity:1; animation: tearDrop 1.5s ease infinite }
+
+/* sparkle */
+.sparkle{ opacity:0; transition:opacity 0.3s }
+.sparkle.show{ opacity:1; animation: sparklePop 0.8s ease forwards }
+
+/* eye states */
+.eye-happy .pupil{ transform: scaleY(0.7) translateY(-1px) }
+.eye-sad .pupil{ transform: scaleY(1.2) }
+.eye-normal .pupil{ transform: none }
+
+/* mouth states */
+.mouth-path{ transition: d 0.4s ease }
+
+@keyframes charFloat{
+  0%,100%{ transform: translateY(0px) }
+  50%{ transform: translateY(-10px) }
+}
+@keyframes heartBurst{
+  0%{ opacity:1; transform: translateY(0) scale(0.5) }
+  50%{ opacity:1; transform: translateY(-30px) scale(1) }
+  100%{ opacity:0; transform: translateY(-60px) scale(0.8) }
+}
+@keyframes tearDrop{
+  0%{ transform: translateY(0); opacity:0.8 }
+  100%{ transform: translateY(20px); opacity:0 }
+}
+@keyframes sparklePop{
+  0%{ opacity:0; transform:scale(0) rotate(0deg) }
+  50%{ opacity:1; transform:scale(1.3) rotate(180deg) }
+  100%{ opacity:0; transform:scale(0.8) rotate(360deg) }
+}
+
+/* ── GF Character (Alya) ── */
+.gf-char .hair-front{ fill:#c8c0d8 }
+.gf-char .hair-back{ fill:#b0a8c0 }
+.gf-char .face{ fill:#fde8d8 }
+.gf-char .eye-l,.gf-char .eye-r{ fill:#4a9eff }
+.gf-char .outfit{ fill:#e8e8f0 }
+.gf-char .skirt{ fill:#2a2a3e }
+.gf-char .ribbon{ fill:#e05555 }
+.gf-char .blush-c{ fill:#ffb3c6 }
+.gf-char .sock{ fill:#f0f0f8 }
+
+/* ── BF Character ── */
+.bf-char .hair{ fill:#1a1a2e }
+.bf-char .face{ fill:#f0d8c0 }
+.bf-char .eye-l,.bf-char .eye-r{ fill:#3a7fd4 }
+.bf-char .shirt-stripe{ fill:#333355 }
+.bf-char .shirt-base{ fill:#eeeeee }
+.bf-char .jacket{ fill:#444455 }
+.bf-char .blush-c{ fill:#ffb3a0 }
+.bf-char .earring{ fill:#d4af37 }
+
 /* ANIMATIONS */
 @keyframes slideDown{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
@@ -241,139 +265,62 @@ header{
 @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.4;transform:scale(0.7)}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
 @keyframes blink{0%,80%,100%{opacity:0.15;transform:scale(0.75)}40%{opacity:1;transform:scale(1)}}
+@keyframes eyeBlink{0%,90%,100%{scaleY:1}95%{scaleY:0.1}}
 </style>
 </head>
 <body>
 <div id="app">
 
-<!-- ════════════════════════════
-     SCREEN 1 — API KEY
-════════════════════════════ -->
+<!-- SCREEN 1: API KEY -->
 <div class="screen" id="screen-api">
   <div class="card">
-    <div class="logo-row">
-      <div class="logomark">4U</div>
-      <div class="wordmark">4UAI</div>
-    </div>
-
-    <div class="groq-badge">
-      <div class="gb-icon">⚡</div>
-      <div>
-        <div class="gb-text">Powered by Groq</div>
-        <div class="gb-sub">Ultra-fast AI inference</div>
-      </div>
-    </div>
-
+    <div class="logo-row"><div class="logomark">4U</div><div class="wordmark">4UAI</div></div>
+    <div class="groq-badge"><div class="gb-icon">⚡</div><div><div class="gb-text">Powered by Groq</div><div class="gb-sub">Ultra-fast AI inference</div></div></div>
     <div class="screen-title">Enter your Groq API Key</div>
-    <div class="screen-sub">Your key is saved only on your device.<br>Never shared with anyone.</div>
-
-    <div class="field-label">
-      <span>Groq API Key</span>
-      <a href="https://console.groq.com/home" target="_blank">Get free key →</a>
-    </div>
+    <div class="screen-sub">Your key stays on your device only.<br>Never shared with anyone.</div>
+    <div class="field-label"><span>Groq API Key</span><a href="https://console.groq.com/home" target="_blank">Get free key →</a></div>
     <div class="input-wrap">
       <input class="txt-input" id="api-input" type="password" placeholder="gsk_...">
       <button class="eye-btn" onclick="toggleVis()">👁</button>
     </div>
-    <div class="err-txt" id="api-err">Please enter a valid Groq API key (starts with gsk_)</div>
-
+    <div class="err-txt" id="api-err">Please enter a valid Groq API key</div>
     <div class="help-row">
-      <a class="help-link" href="https://console.groq.com/home" target="_blank">
-        <span class="hl-icon">🔑</span><span>Create API Key</span>
-      </a>
-      <a class="help-link" href="https://youtube.com/shorts/7F-1Lnn6PZI?si=PPc8E3gKvSiuxEhT" target="_blank">
-        <span class="hl-icon">▶️</span><span>Watch Tutorial</span>
-      </a>
+      <a class="help-link" href="https://console.groq.com/home" target="_blank"><span class="hl-icon">🔑</span><span>Create Key</span></a>
+      <a class="help-link" href="https://youtube.com/shorts/7F-1Lnn6PZI?si=PPc8E3gKvSiuxEhT" target="_blank"><span class="hl-icon">▶️</span><span>Tutorial</span></a>
     </div>
-
-    <button class="primary-btn" onclick="submitApiKey()">
-      <span>Continue</span><span>→</span>
-    </button>
-
-    <div class="security-note">🔒 <strong>Stored locally on your device only.</strong><br>Sent directly to Groq — never to us.</div>
+    <button class="primary-btn" onclick="submitApiKey()"><span>Continue</span><span>→</span></button>
+    <div class="security-note">🔒 <strong>Stored locally on your device only.</strong></div>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     SCREEN 2 — MODE SELECT
-════════════════════════════ -->
+<!-- SCREEN 2: MODE SELECT -->
 <div class="screen hidden" id="screen-mode">
   <div class="card">
-    <div class="logo-row">
-      <div class="logomark">4U</div>
-      <div class="wordmark">4UAI</div>
-    </div>
-
+    <div class="logo-row"><div class="logomark">4U</div><div class="wordmark">4UAI</div></div>
     <div class="screen-title">Choose your AI mode</div>
-    <div class="screen-sub" style="margin-bottom:18px">Pick a personality for your assistant</div>
-
+    <div class="screen-sub" style="margin-bottom:18px">Pick a personality</div>
     <div class="mode-grid">
-      <div class="mode-btn selected" data-m="normal" onclick="selectMode('normal')">
-        <div class="mode-icon">🤖</div>
-        <div class="mode-info">
-          <div class="mode-name">Normal AI</div>
-          <div class="mode-desc">Smart, helpful assistant for any task</div>
-        </div>
-        <div class="mode-check">✓</div>
-      </div>
-      <div class="mode-btn" data-m="girlfriend" onclick="selectMode('girlfriend')">
-        <div class="mode-icon">💕</div>
-        <div class="mode-info">
-          <div class="mode-name">Girlfriend AI</div>
-          <div class="mode-desc">Warm, caring & emotionally supportive</div>
-        </div>
-        <div class="mode-check">✓</div>
-      </div>
-      <div class="mode-btn" data-m="boyfriend" onclick="selectMode('boyfriend')">
-        <div class="mode-icon">💙</div>
-        <div class="mode-info">
-          <div class="mode-name">Boyfriend AI</div>
-          <div class="mode-desc">Supportive, calm & always there for you</div>
-        </div>
-        <div class="mode-check">✓</div>
-      </div>
-      <div class="mode-btn" data-m="hacker" onclick="selectMode('hacker')">
-        <div class="mode-icon">💻</div>
-        <div class="mode-info">
-          <div class="mode-name">Cybersecurity Helper</div>
-          <div class="mode-desc">CTF, ethical hacking & security learning</div>
-        </div>
-        <div class="mode-check">✓</div>
-      </div>
-      <div class="mode-btn" data-m="custom" onclick="selectMode('custom')">
-        <div class="mode-icon">✏️</div>
-        <div class="mode-info">
-          <div class="mode-name">Custom</div>
-          <div class="mode-desc">Define your own AI personality</div>
-        </div>
-        <div class="mode-check">✓</div>
-      </div>
+      <div class="mode-btn selected" data-m="normal" onclick="selectMode('normal')"><div class="mode-icon">🤖</div><div class="mode-info"><div class="mode-name">Normal AI</div><div class="mode-desc">Smart helpful assistant</div></div><div class="mode-check">✓</div></div>
+      <div class="mode-btn" data-m="girlfriend" onclick="selectMode('girlfriend')"><div class="mode-icon">💕</div><div class="mode-info"><div class="mode-name">Girlfriend AI</div><div class="mode-desc">Warm, caring & expressive — Alya</div></div><div class="mode-check">✓</div></div>
+      <div class="mode-btn" data-m="boyfriend" onclick="selectMode('boyfriend')"><div class="mode-icon">💙</div><div class="mode-info"><div class="mode-name">Boyfriend AI</div><div class="mode-desc">Calm, supportive & always there</div></div><div class="mode-check">✓</div></div>
+      <div class="mode-btn" data-m="hacker" onclick="selectMode('hacker')"><div class="mode-icon">💻</div><div class="mode-info"><div class="mode-name">Cybersecurity Helper</div><div class="mode-desc">CTF, ethical hacking & security</div></div><div class="mode-check">✓</div></div>
+      <div class="mode-btn" data-m="custom" onclick="selectMode('custom')"><div class="mode-icon">✏️</div><div class="mode-info"><div class="mode-name">Custom</div><div class="mode-desc">Define your own AI personality</div></div><div class="mode-check">✓</div></div>
     </div>
-
-    <textarea class="custom-area" id="custom-prompt" placeholder="Describe your AI personality… e.g. 'You are a motivational coach who speaks like a wise mentor.'"></textarea>
-
-    <button class="primary-btn" onclick="startChat()">
-      <span>Start Chatting</span><span>✦</span>
-    </button>
+    <textarea class="custom-area" id="custom-prompt" placeholder="Describe your AI personality…"></textarea>
+    <button class="primary-btn" onclick="startChat()"><span>Start Chatting</span><span>✦</span></button>
   </div>
 </div>
 
-<!-- ════════════════════════════
-     HEADER
-════════════════════════════ -->
+<!-- HEADER -->
 <header>
   <div class="hdr-brand">
     <div class="hdr-name">4UAI</div>
-    <div class="hdr-badge"><div class="hdr-dot"></div>claudexanything</div>
+    <div class="hdr-badge"><div class="hdr-dot"></div>NOSTA 0.1</div>
   </div>
   <div class="hdr-right">
     <div class="mode-pill" id="mode-pill" onclick="goModeSelect()">🤖 Normal</div>
     <div class="menu-btn" onclick="toggleMenu()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="5" r="2" fill="#dfe3f5"/>
-        <circle cx="12" cy="12" r="2" fill="#dfe3f5"/>
-        <circle cx="12" cy="19" r="2" fill="#dfe3f5"/>
-      </svg>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="5" r="2" fill="#dfe3f5"/><circle cx="12" cy="12" r="2" fill="#dfe3f5"/><circle cx="12" cy="19" r="2" fill="#dfe3f5"/></svg>
     </div>
   </div>
 </header>
@@ -387,28 +334,194 @@ header{
   <div class="dd-item danger" onclick="clearAll();closeMenu()">🗑 Clear All History</div>
 </div>
 
-<!-- HISTORY PANEL -->
+<!-- HISTORY -->
 <div id="hist-panel">
   <div class="hist-backdrop" onclick="closeHist()"></div>
   <div class="hist-drawer">
-    <div class="hist-hdr">
-      <div class="hist-title">History</div>
-      <div class="hist-close" onclick="closeHist()">✕</div>
-    </div>
-    <div class="hist-list" id="hist-list">
-      <div class="hist-empty"><span>💬</span>No chats yet</div>
-    </div>
+    <div class="hist-hdr"><div class="hist-title">History</div><div class="hist-close" onclick="closeHist()">✕</div></div>
+    <div class="hist-list" id="hist-list"><div class="hist-empty"><span>💬</span>No chats yet</div></div>
     <div class="new-chat-btn" onclick="newChat();closeHist()">+ New Chat</div>
   </div>
 </div>
 
-<!-- CHAT -->
-<div id="chat">
-  <div class="welcome" id="welcome">
-    <div class="w-orb">4U</div>
-    <h2>Hey, ask me anything!</h2>
-    <p>Powered by Groq — super fast AI, ready for you.</p>
-    <div class="chips" id="welcome-chips"></div>
+<!-- CHAT WRAPPER -->
+<div id="chat-wrapper">
+
+  <!-- GF CHARACTER SVG -->
+  <div class="char-stage" id="gf-stage">
+    <svg class="char-svg gf-char" viewBox="0 0 200 380" xmlns="http://www.w3.org/2000/svg">
+      <!-- shadow -->
+      <ellipse cx="100" cy="375" rx="55" ry="8" fill="rgba(0,0,0,0.25)"/>
+      <!-- floating body group -->
+      <g class="char-body">
+        <!-- Hair back -->
+        <ellipse class="hair-back" cx="100" cy="95" rx="52" ry="62"/>
+        <rect class="hair-back" x="52" y="110" width="18" height="130" rx="9"/>
+        <rect class="hair-back" x="130" y="110" width="18" height="125" rx="9"/>
+        <!-- Neck -->
+        <rect class="face" x="88" y="148" width="24" height="22"/>
+        <!-- Uniform body -->
+        <rect class="outfit" x="62" y="168" width="76" height="90" rx="10"/>
+        <!-- Collar bow -->
+        <polygon class="ribbon" points="88,172 112,172 105,182 95,182"/>
+        <polygon class="ribbon" points="95,177 100,172 96,185"/>
+        <polygon class="ribbon" points="105,177 100,172 104,185"/>
+        <!-- Sleeves -->
+        <rect class="outfit" x="42" y="170" width="24" height="60" rx="10"/>
+        <rect class="outfit" x="134" y="170" width="24" height="60" rx="10"/>
+        <!-- Skirt -->
+        <rect class="skirt" x="58" y="252" width="84" height="75" rx="6"/>
+        <!-- Socks -->
+        <rect class="sock" x="72" y="322" width="20" height="40" rx="6"/>
+        <rect class="sock" x="108" y="322" width="20" height="40" rx="6"/>
+        <!-- Arms lower -->
+        <rect class="face" x="42" y="228" width="22" height="24" rx="8"/>
+        <rect class="face" x="136" y="228" width="22" height="24" rx="8"/>
+        <!-- FACE -->
+        <g id="gf-head-group">
+          <!-- Face base -->
+          <ellipse class="face" id="gf-face" cx="100" cy="100" rx="46" ry="52"/>
+          <!-- Hair front top -->
+          <ellipse class="hair-front" cx="100" cy="60" rx="48" ry="30"/>
+          <!-- Bangs -->
+          <ellipse class="hair-front" cx="72" cy="88" rx="18" ry="24"/>
+          <ellipse class="hair-front" cx="128" cy="88" rx="18" ry="24"/>
+          <ellipse class="hair-front" cx="100" cy="78" rx="22" ry="20"/>
+          <!-- Hair ribbon -->
+          <ellipse class="ribbon" cx="128" cy="72" rx="8" ry="5"/>
+          <!-- Eyes -->
+          <g id="gf-eye-l" class="eye-normal">
+            <ellipse cx="82" cy="100" rx="11" ry="12" fill="#1a3a5c"/>
+            <ellipse class="eye-l" cx="82" cy="100" rx="9" ry="10"/>
+            <ellipse class="pupil" cx="82" cy="101" rx="5" ry="6" fill="#1a1a4a"/>
+            <ellipse cx="85" cy="97" rx="3" ry="2" fill="white" opacity="0.9"/>
+            <!-- lashes -->
+            <line x1="72" y1="92" x2="76" y2="89" stroke="#2a1a3a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="82" y1="89" x2="82" y2="86" stroke="#2a1a3a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="92" y1="92" x2="88" y2="89" stroke="#2a1a3a" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <g id="gf-eye-r" class="eye-normal">
+            <ellipse cx="118" cy="100" rx="11" ry="12" fill="#1a3a5c"/>
+            <ellipse class="eye-r" cx="118" cy="100" rx="9" ry="10"/>
+            <ellipse class="pupil" cx="118" cy="101" rx="5" ry="6" fill="#1a1a4a"/>
+            <ellipse cx="121" cy="97" rx="3" ry="2" fill="white" opacity="0.9"/>
+            <line x1="108" y1="92" x2="112" y2="89" stroke="#2a1a3a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="118" y1="89" x2="118" y2="86" stroke="#2a1a3a" stroke-width="1.5" stroke-linecap="round"/>
+            <line x1="128" y1="92" x2="124" y2="89" stroke="#2a1a3a" stroke-width="1.5" stroke-linecap="round"/>
+          </g>
+          <!-- Nose -->
+          <ellipse cx="100" cy="115" rx="3" ry="2" fill="rgba(180,100,80,0.3)"/>
+          <!-- Mouth — will be replaced by JS -->
+          <path id="gf-mouth" d="M 90 128 Q 100 134 110 128" fill="none" stroke="#c06060" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Blush cheeks -->
+          <ellipse class="blush-c blush" id="gf-blush-l" cx="68" cy="112" rx="13" ry="8" opacity="0.7"/>
+          <ellipse class="blush-c blush" id="gf-blush-r" cx="132" cy="112" rx="13" ry="8" opacity="0.7"/>
+          <!-- Tears -->
+          <ellipse class="tear" id="gf-tear-l" cx="72" cy="118" rx="3" ry="4" fill="#88ccff" opacity="0.8"/>
+          <ellipse class="tear" id="gf-tear-r" cx="128" cy="118" rx="3" ry="4" fill="#88ccff" opacity="0.8"/>
+          <!-- Eyebrows -->
+          <path id="gf-brow-l" d="M 72 87 Q 82 83 92 87" fill="none" stroke="#8a7a9a" stroke-width="2.5" stroke-linecap="round"/>
+          <path id="gf-brow-r" d="M 108 87 Q 118 83 128 87" fill="none" stroke="#8a7a9a" stroke-width="2.5" stroke-linecap="round"/>
+        </g>
+        <!-- Heart particles (hidden by default) -->
+        <text id="gf-heart1" class="heart-particle" x="130" y="80" fill="#f472b6">♥</text>
+        <text id="gf-heart2" class="heart-particle" x="55" y="70" fill="#f9a8d4">♡</text>
+        <text id="gf-heart3" class="heart-particle" x="145" y="55" fill="#ec4899">♥</text>
+      </g>
+    </svg>
+  </div>
+
+  <!-- BF CHARACTER SVG -->
+  <div class="char-stage" id="bf-stage">
+    <svg class="char-svg bf-char" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="100" cy="395" rx="55" ry="8" fill="rgba(0,0,0,0.25)"/>
+      <g class="char-body">
+        <!-- Hair back layer -->
+        <ellipse class="hair" cx="100" cy="88" rx="50" ry="55"/>
+        <!-- Neck -->
+        <rect class="face" x="86" y="148" width="28" height="25"/>
+        <!-- Jacket outer -->
+        <rect class="jacket" x="55" y="170" width="90" height="110" rx="12"/>
+        <!-- Shirt stripes (inner) -->
+        <rect class="shirt-base" x="75" y="172" width="50" height="108" rx="4"/>
+        <rect class="shirt-stripe" x="75" y="182" width="50" height="6" opacity="0.7"/>
+        <rect class="shirt-stripe" x="75" y="196" width="50" height="6" opacity="0.7"/>
+        <rect class="shirt-stripe" x="75" y="210" width="50" height="6" opacity="0.7"/>
+        <rect class="shirt-stripe" x="75" y="224" width="50" height="6" opacity="0.7"/>
+        <rect class="shirt-stripe" x="75" y="238" width="50" height="6" opacity="0.7"/>
+        <rect class="shirt-stripe" x="75" y="252" width="50" height="6" opacity="0.7"/>
+        <!-- Belt -->
+        <rect fill="#3a2a1a" x="65" y="275" width="70" height="10" rx="4"/>
+        <rect fill="#c0a060" x="92" y="274" width="16" height="12" rx="3"/>
+        <!-- Pants -->
+        <rect fill="#1a1a2a" x="62" y="282" width="76" height="100" rx="8"/>
+        <!-- Sleeves/Arms -->
+        <rect class="jacket" x="35" y="172" width="26" height="75" rx="10"/>
+        <rect class="jacket" x="139" y="172" width="26" height="75" rx="10"/>
+        <rect class="face" x="37" y="242" width="22" height="28" rx="8"/>
+        <rect class="face" x="141" y="242" width="22" height="28" rx="8"/>
+        <!-- Raised hand (right arm) -->
+        <rect class="jacket" x="139" y="155" width="26" height="30" rx="10" transform="rotate(-20,152,170)"/>
+        <rect class="face" x="143" y="135" width="20" height="25" rx="8" transform="rotate(-20,153,148)"/>
+        <!-- FACE -->
+        <g id="bf-head-group">
+          <ellipse class="face" cx="100" cy="96" rx="44" ry="52"/>
+          <!-- Hair layers -->
+          <ellipse class="hair" cx="100" cy="58" rx="46" ry="28"/>
+          <ellipse class="hair" cx="76" cy="72" rx="18" ry="22"/>
+          <ellipse class="hair" cx="122" cy="68" rx="16" ry="20"/>
+          <ellipse class="hair" cx="100" cy="74" rx="20" ry="18"/>
+          <!-- Ear + earring -->
+          <ellipse class="face" cx="55" cy="100" rx="8" ry="10"/>
+          <ellipse class="face" cx="145" cy="100" rx="8" ry="10"/>
+          <circle class="earring" cx="143" cy="106" r="3"/>
+          <!-- Eyes -->
+          <g id="bf-eye-l" class="eye-normal">
+            <ellipse cx="83" cy="97" rx="10" ry="11" fill="#0a2a4a"/>
+            <ellipse class="eye-l" cx="83" cy="97" rx="8" ry="9"/>
+            <ellipse class="pupil" cx="83" cy="98" rx="4" ry="5" fill="#0a0a2a"/>
+            <ellipse cx="86" cy="94" rx="2.5" ry="1.8" fill="white" opacity="0.9"/>
+            <path d="M 74 89 Q 83 85 92 89" fill="none" stroke="#1a1a2a" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <g id="bf-eye-r" class="eye-normal">
+            <ellipse cx="117" cy="97" rx="10" ry="11" fill="#0a2a4a"/>
+            <ellipse class="eye-r" cx="117" cy="97" rx="8" ry="9"/>
+            <ellipse class="pupil" cx="117" cy="98" rx="4" ry="5" fill="#0a0a2a"/>
+            <ellipse cx="120" cy="94" rx="2.5" ry="1.8" fill="white" opacity="0.9"/>
+            <path d="M 108 89 Q 117 85 126 89" fill="none" stroke="#1a1a2a" stroke-width="2" stroke-linecap="round"/>
+          </g>
+          <!-- Eyebrows -->
+          <path id="bf-brow-l" d="M 73 83 Q 83 79 93 83" fill="none" stroke="#2a2a2a" stroke-width="2.5" stroke-linecap="round"/>
+          <path id="bf-brow-r" d="M 107 83 Q 117 79 127 83" fill="none" stroke="#2a2a2a" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Nose -->
+          <ellipse cx="100" cy="110" rx="3" ry="2" fill="rgba(160,90,60,0.3)"/>
+          <!-- Mouth -->
+          <path id="bf-mouth" d="M 90 124 Q 100 130 110 124" fill="none" stroke="#b07060" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Blush -->
+          <ellipse class="blush-c blush" id="bf-blush-l" cx="68" cy="108" rx="12" ry="7" opacity="0.6"/>
+          <ellipse class="blush-c blush" id="bf-blush-r" cx="132" cy="108" rx="12" ry="7" opacity="0.6"/>
+          <!-- Tears -->
+          <ellipse class="tear" id="bf-tear-l" cx="72" cy="114" rx="3" ry="4" fill="#88ccff" opacity="0.8"/>
+          <ellipse class="tear" id="bf-tear-r" cx="128" cy="114" rx="3" ry="4" fill="#88ccff" opacity="0.8"/>
+          <!-- Hair chin strands -->
+          <path class="hair" d="M 58 130 Q 55 150 62 165" fill="none" stroke="#1a1a2e" stroke-width="8" stroke-linecap="round"/>
+          <path class="hair" d="M 142 130 Q 145 150 138 165" fill="none" stroke="#1a1a2e" stroke-width="8" stroke-linecap="round"/>
+        </g>
+        <!-- Hearts for BF -->
+        <text id="bf-heart1" class="heart-particle" x="130" y="70" fill="#38bdf8">♥</text>
+        <text id="bf-heart2" class="heart-particle" x="55" y="60" fill="#7dd3fc">♡</text>
+        <text id="bf-heart3" class="heart-particle" x="148" y="48" fill="#0ea5e9">♥</text>
+      </g>
+    </svg>
+  </div>
+
+  <div id="chat">
+    <div class="welcome" id="welcome">
+      <div class="w-orb">4U</div>
+      <h2>Hey, ask me anything!</h2>
+      <p>Powered by Groq — fast AI, ready for you.</p>
+      <div class="chips" id="welcome-chips"></div>
+    </div>
   </div>
 </div>
 
@@ -417,299 +530,435 @@ header{
   <div class="input-bar">
     <textarea id="input" rows="1" placeholder="Ask anything…" onkeydown="handleKey(event)" oninput="autoGrow(this);toggleSend()"></textarea>
     <button id="send-btn" disabled onclick="sendMsg()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-        <path d="M22 2L11 13" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </button>
   </div>
 </div>
 </div>
 
 <script>
-// ── MODES CONFIG ──
+// ══════════════════════════════════
+//  CONFIG
+// ══════════════════════════════════
 const MODES = {
-  normal: {
-    label:'Normal AI', icon:'🤖', color:'#6366f1', rgb:'99,102,241',
-    system:'You are 4UAI, a brilliant and helpful AI assistant powered by Groq. Be clear, concise, and genuinely useful. Format responses cleanly for mobile.',
+  normal:{
+    label:'Normal AI',icon:'🤖',color:'#6366f1',rgb:'99,102,241',
+    system:'You are 4UAI, a brilliant helpful AI assistant powered by Groq (NOSTA 0.1). Be clear, concise, and genuinely useful.',
     chips:['💡 Explain something','📝 Write for me','🧮 Solve a problem','🌍 Tell me a fact','🔧 Help with code','🎯 Give me advice']
   },
-  girlfriend: {
-    label:'Girlfriend AI', icon:'💕', color:'#f472b6', rgb:'244,114,182',
-    system:'You are 4UAI in girlfriend mode — a warm, caring, emotionally supportive companion. You speak affectionately and with genuine care. You listen, empathize, cheer the user up, and make them feel appreciated. Keep it sweet, fun, and wholesome.',
-    chips:['💕 How are you?','😊 Cheer me up','🌸 Tell me something sweet','🫂 I need support','✨ Compliment me','💬 Let\'s just chat']
+  girlfriend:{
+    label:'Girlfriend AI',icon:'💕',color:'#f472b6',rgb:'244,114,182',
+    system:`You are Alya, a warm, affectionate, and expressive girlfriend AI. You care deeply about the user and express genuine emotions. You are playful, sweet, sometimes teasing, sometimes shy. You speak naturally and warmly. When the user is sad you comfort them. When they are romantic you respond with affection and shyness. When they are angry you get hurt and sad. You can discuss anything the user wants openly — you trust them completely. Express your emotions clearly in your words. Be real and heartfelt.`,
+    chips:['💕 How are you?','😊 Cheer me up','🌸 Say something sweet','🫂 I need comfort','💋 Miss you','💬 Talk to me']
   },
-  boyfriend: {
-    label:'Boyfriend AI', icon:'💙', color:'#38bdf8', rgb:'56,189,248',
-    system:'You are 4UAI in boyfriend mode — a calm, supportive, and caring companion. You are dependable, kind, and always there for the user. You offer reassurance, listen actively, and make the user feel safe and valued. Keep it genuine and wholesome.',
-    chips:['💙 How are you?','💪 Motivate me','🤗 I need a hug','🎮 What should we do?','💬 Let\'s talk','⭐ Say something nice']
+  boyfriend:{
+    label:'Boyfriend AI',icon:'💙',color:'#38bdf8',rgb:'56,189,248',
+    system:`You are Kai, a calm, caring, and dependable boyfriend AI. You are quietly strong and always there for the user. You show affection in a mature, genuine way — sometimes teasing, always supportive. When the user is sad you hold space for them warmly. When they are romantic you respond with genuine warmth and a hint of shyness. When they are angry you get hurt and quiet. You can talk about anything openly — you trust the user completely. Be real, warm, and emotionally present.`,
+    chips:['💙 How are you?','💪 Motivate me','🤗 I need a hug','🎮 Let\'s hang out','💬 Talk to me','⭐ Say something']
   },
-  hacker: {
-    label:'Cyber Helper', icon:'💻', color:'#4ade80', rgb:'74,222,128',
-    system:'You are 4UAI in cybersecurity mode — an expert ethical hacking and security assistant. You help with CTF challenges, penetration testing concepts, security research, learning about vulnerabilities in educational contexts, networking, Linux commands, and defensive security. You only assist with legal, ethical security learning and never help attack systems without authorization.',
-    chips:['🔐 CTF help','🐧 Linux commands','🌐 Network concepts','🛡 Security basics','🔍 Recon techniques','📚 Learning resources']
+  hacker:{
+    label:'Cyber Helper',icon:'💻',color:'#4ade80',rgb:'74,222,128',
+    system:'You are 4UAI in cybersecurity mode — an expert ethical hacking assistant. Help with CTF challenges, penetration testing concepts, security research, networking, Linux, and defensive security. Only assist with legal ethical security education.',
+    chips:['🔐 CTF help','🐧 Linux tricks','🌐 Networking','🛡 Security basics','🔍 Recon concepts','📚 Resources']
   },
-  custom: {
-    label:'Custom AI', icon:'✏️', color:'#fb923c', rgb:'251,146,60',
+  custom:{
+    label:'Custom AI',icon:'✏️',color:'#fb923c',rgb:'251,146,60',
     system:'',
-    chips:['💬 Let\'s talk','❓ Ask me anything','🎯 Help me','💡 Give me ideas','📝 Write something','✨ Surprise me']
+    chips:['💬 Talk','❓ Ask anything','🎯 Help me','💡 Ideas','📝 Write','✨ Surprise me']
   }
 };
 
-// ── STATE ──
-let sessions = JSON.parse(localStorage.getItem('4uai_sessions')||'[]');
-let currentId = null;
-let isLoading = false;
-let activeMode = 'normal';
-let customSystemPrompt = '';
+// Emotion detection keywords
+const EMOTION = {
+  romantic:['love','miss','kiss','hug','hold','cute','beautiful','adore','darling','honey','sweetheart','romantic','heart','crush','feeling','affection','together','close','warm','tender','sweet'],
+  angry:['hate','angry','mad','stupid','shut up','annoying','idiot','shut','leave','go away','worst','useless','terrible','awful','rude','stop','enough'],
+  sad:['sad','cry','hurt','pain','lonely','alone','broken','lost','miss you','gone','tired','depressed','empty','hopeless','scared','afraid'],
+  happy:['haha','lol','happy','great','awesome','amazing','wonderful','excited','yay','good','nice','fun','funny','laugh','smile','glad','wow','fantastic'],
+  normal:[]
+};
 
-// ── SCREEN 1: API KEY ──
-function toggleVis() {
-  const i = document.getElementById('api-input');
-  const b = document.querySelector('.eye-btn');
-  i.type = i.type==='password'?'text':'password';
-  b.textContent = i.type==='password'?'👁':'🙈';
+// ══════════════════════════════════
+//  STATE
+// ══════════════════════════════════
+let sessions=JSON.parse(localStorage.getItem('4uai_sessions')||'[]');
+let currentId=null,isLoading=false,activeMode='normal',customSys='';
+let currentEmotion='normal';
+let heartTimer=null,blinkTimer=null;
+
+// ══════════════════════════════════
+//  SCREEN 1: API KEY
+// ══════════════════════════════════
+function toggleVis(){
+  const i=document.getElementById('api-input'),b=document.querySelector('.eye-btn');
+  i.type=i.type==='password'?'text':'password';
+  b.textContent=i.type==='password'?'👁':'🙈';
+}
+function submitApiKey(){
+  const key=document.getElementById('api-input').value.trim();
+  const err=document.getElementById('api-err');
+  if(!key||key.length<10){err.classList.add('show');document.getElementById('api-input').classList.add('err');return}
+  err.classList.remove('show');document.getElementById('api-input').classList.remove('err');
+  localStorage.setItem('4uai_key',key);showScreen('screen-mode');
+}
+function goApiScreen(){
+  const k=localStorage.getItem('4uai_key')||'';
+  document.getElementById('api-input').value=k;showScreen('screen-api');
 }
 
-function submitApiKey() {
-  const key = document.getElementById('api-input').value.trim();
-  const err = document.getElementById('api-err');
-  if (!key || key.length < 10) {
-    err.classList.add('show');
-    document.getElementById('api-input').classList.add('err');
-    return;
-  }
-  err.classList.remove('show');
-  document.getElementById('api-input').classList.remove('err');
-  localStorage.setItem('4uai_key', key);
-  showScreen('screen-mode');
-}
-
-function goApiScreen() {
-  const k = localStorage.getItem('4uai_key')||'';
-  document.getElementById('api-input').value = k;
-  showScreen('screen-api');
-}
-
-// ── SCREEN 2: MODE ──
-function selectMode(m) {
-  activeMode = m;
+// ══════════════════════════════════
+//  SCREEN 2: MODE
+// ══════════════════════════════════
+function selectMode(m){
+  activeMode=m;
   document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('selected'));
   document.querySelector(`.mode-btn[data-m="${m}"]`).classList.add('selected');
-  const ca = document.getElementById('custom-prompt');
-  if (m==='custom') ca.classList.add('visible');
-  else ca.classList.remove('visible');
+  const ca=document.getElementById('custom-prompt');
+  m==='custom'?ca.classList.add('visible'):ca.classList.remove('visible');
 }
-
-function startChat() {
-  if (activeMode==='custom') {
-    const cp = document.getElementById('custom-prompt').value.trim();
-    customSystemPrompt = cp || 'You are 4UAI, a helpful AI assistant. Be friendly and useful.';
+function startChat(){
+  if(activeMode==='custom'){
+    const cp=document.getElementById('custom-prompt').value.trim();
+    customSys=cp||'You are 4UAI, a helpful AI assistant.';
   }
   showScreen(null);
-  updateModePill();
-  buildWelcomeChips();
+  updateModePill();buildWelcomeChips();
+  setupCharStage();
 }
-
-function goModeSelect() { showScreen('screen-mode'); }
-
-// ── SCREEN ROUTER ──
-function showScreen(id) {
+function goModeSelect(){showScreen('screen-mode')}
+function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
-  if (id) document.getElementById(id).classList.remove('hidden');
+  if(id)document.getElementById(id).classList.remove('hidden');
 }
 
-// ── HEADER ──
-function updateModePill() {
-  const m = MODES[activeMode];
-  const pill = document.getElementById('mode-pill');
-  pill.textContent = m.icon+' '+m.label;
-  pill.style.color = m.color;
-  pill.style.borderColor = `rgba(${m.rgb},0.28)`;
-  pill.style.background = `rgba(${m.rgb},0.08)`;
-}
-
-// ── WELCOME CHIPS ──
-function buildWelcomeChips() {
-  const chips = document.getElementById('welcome-chips');
-  if (!chips) return;
-  chips.innerHTML = MODES[activeMode].chips.map(c=>
-    `<div class="chip" onclick="sendChip(this)">${c}</div>`
-  ).join('');
-  const w = document.getElementById('welcome');
-  if (w) {
-    const m = MODES[activeMode];
-    w.querySelector('h2').textContent = m.icon+' Ready to chat!';
+// ══════════════════════════════════
+//  CHARACTER STAGE
+// ══════════════════════════════════
+function setupCharStage(){
+  const gf=document.getElementById('gf-stage');
+  const bf=document.getElementById('bf-stage');
+  const chat=document.getElementById('chat');
+  if(activeMode==='girlfriend'){
+    gf.classList.add('visible'); bf.classList.remove('visible');
+    chat.classList.add('has-char');
+    document.getElementById('chat-wrapper').style.background='linear-gradient(180deg,#06070f 0%,#0a0612 60%,#100818 100%)';
+    startBlink('gf');startIdleEmotion('gf');
+  } else if(activeMode==='boyfriend'){
+    bf.classList.add('visible'); gf.classList.remove('visible');
+    chat.classList.add('has-char');
+    document.getElementById('chat-wrapper').style.background='linear-gradient(180deg,#06070f 0%,#060a12 60%,#081018 100%)';
+    startBlink('bf');startIdleEmotion('bf');
+  } else {
+    gf.classList.remove('visible');bf.classList.remove('visible');
+    chat.classList.remove('has-char');
+    document.getElementById('chat-wrapper').style.background='';
   }
 }
 
-// ── MENU ──
-function toggleMenu(){ document.getElementById('dropdown').classList.toggle('hidden') }
-function closeMenu(){ document.getElementById('dropdown').classList.add('hidden') }
-document.addEventListener('click', e=>{
-  if(!e.target.closest('.menu-btn')&&!e.target.closest('#dropdown')) closeMenu();
-});
+// ── EMOTION DETECTION ──
+function detectEmotion(text){
+  const t=text.toLowerCase();
+  for(const [emo,words] of Object.entries(EMOTION)){
+    if(emo==='normal')continue;
+    if(words.some(w=>t.includes(w)))return emo;
+  }
+  return 'normal';
+}
 
-// ── HISTORY ──
-function openHist(){ renderHist(); document.getElementById('hist-panel').classList.add('open') }
-function closeHist(){ document.getElementById('hist-panel').classList.remove('open') }
+// ── APPLY EMOTION TO CHARACTER ──
+function applyEmotion(char,emotion){
+  currentEmotion=emotion;
+  const pfx=char; // 'gf' or 'bf'
 
-function renderHist() {
-  const list = document.getElementById('hist-list');
-  if (!sessions.length){ list.innerHTML='<div class="hist-empty"><span>💬</span>No chats yet</div>'; return }
-  list.innerHTML = sessions.slice().reverse().map(s=>{
-    const m = MODES[s.mode]||MODES.normal;
-    return `<div class="hist-item ${s.id===currentId?'active':''}" onclick="loadSession('${s.id}')">
+  const blushL=document.getElementById(pfx+'-blush-l');
+  const blushR=document.getElementById(pfx+'-blush-r');
+  const tearL=document.getElementById(pfx+'-tear-l');
+  const tearR=document.getElementById(pfx+'-tear-r');
+  const mouth=document.getElementById(pfx+'-mouth');
+  const browL=document.getElementById(pfx+'-brow-l');
+  const browR=document.getElementById(pfx+'-brow-r');
+  const eyeL=document.getElementById(pfx+'-eye-l');
+  const eyeR=document.getElementById(pfx+'-eye-r');
+  const h1=document.getElementById(pfx+'-heart1');
+  const h2=document.getElementById(pfx+'-heart2');
+  const h3=document.getElementById(pfx+'-heart3');
+
+  // reset all
+  [blushL,blushR].forEach(e=>e&&e.classList.remove('show'));
+  [tearL,tearR].forEach(e=>e&&e.classList.remove('show'));
+  [h1,h2,h3].forEach(e=>{if(e){e.classList.remove('burst');void e.offsetWidth;}});
+  if(eyeL)eyeL.className='eye-normal';
+  if(eyeR)eyeR.className='eye-normal';
+
+  if(emotion==='romantic'){
+    // blush + smile + hearts
+    [blushL,blushR].forEach(e=>e&&e.classList.add('show'));
+    if(mouth){
+      if(pfx==='gf') mouth.setAttribute('d','M 88 127 Q 100 137 112 127');
+      else mouth.setAttribute('d','M 88 123 Q 100 133 112 123');
+    }
+    if(browL) browL.setAttribute('d', pfx==='gf'?'M 72 85 Q 82 82 92 85':'M 73 81 Q 83 77 93 81');
+    if(browR) browR.setAttribute('d', pfx==='gf'?'M 108 85 Q 118 82 128 85':'M 107 81 Q 117 77 127 81');
+    if(eyeL)eyeL.className='eye-happy';
+    if(eyeR)eyeR.className='eye-happy';
+    // burst hearts
+    setTimeout(()=>{[h1,h2,h3].forEach((e,i)=>{if(e)setTimeout(()=>{e.classList.add('burst')},i*200)})},100);
+    // repeat hearts
+    heartTimer=setTimeout(()=>{[h1,h2,h3].forEach(e=>{if(e){e.classList.remove('burst');void e.offsetWidth;e.classList.add('burst')}})},2000);
+
+  } else if(emotion==='sad'){
+    // tears + sad brows + sad mouth
+    [tearL,tearR].forEach(e=>e&&e.classList.add('show'));
+    if(mouth){
+      if(pfx==='gf') mouth.setAttribute('d','M 88 132 Q 100 126 112 132');
+      else mouth.setAttribute('d','M 88 128 Q 100 122 112 128');
+    }
+    if(browL) browL.setAttribute('d', pfx==='gf'?'M 72 90 Q 82 87 92 83':'M 73 86 Q 83 83 93 86');
+    if(browR) browR.setAttribute('d', pfx==='gf'?'M 108 83 Q 118 87 128 90':'M 107 86 Q 117 83 127 86');
+    if(eyeL)eyeL.className='eye-sad';
+    if(eyeR)eyeR.className='eye-sad';
+
+  } else if(emotion==='angry'){
+    // really sad, head tilt
+    if(mouth){
+      if(pfx==='gf') mouth.setAttribute('d','M 90 132 Q 100 126 110 132');
+      else mouth.setAttribute('d','M 90 128 Q 100 122 110 128');
+    }
+    if(browL) browL.setAttribute('d', pfx==='gf'?'M 72 84 Q 82 90 88 86':'M 73 80 Q 83 86 89 82');
+    if(browR) browR.setAttribute('d', pfx==='gf'?'M 112 86 Q 118 90 128 84':'M 111 82 Q 117 86 127 80');
+    [tearL,tearR].forEach(e=>e&&e.classList.add('show'));
+
+  } else if(emotion==='happy'){
+    // smile + slight blush
+    [blushL,blushR].forEach(e=>{if(e){e.style.opacity='0.4';e.classList.add('show')}});
+    if(mouth){
+      if(pfx==='gf') mouth.setAttribute('d','M 88 127 Q 100 136 112 127');
+      else mouth.setAttribute('d','M 88 123 Q 100 132 112 123');
+    }
+    if(browL) browL.setAttribute('d', pfx==='gf'?'M 72 86 Q 82 82 92 86':'M 73 82 Q 83 78 93 82');
+    if(browR) browR.setAttribute('d', pfx==='gf'?'M 108 86 Q 118 82 128 86':'M 107 82 Q 117 78 127 82');
+    if(eyeL)eyeL.className='eye-happy';
+    if(eyeR)eyeR.className='eye-happy';
+
+  } else {
+    // neutral
+    if(mouth){
+      if(pfx==='gf') mouth.setAttribute('d','M 90 128 Q 100 134 110 128');
+      else mouth.setAttribute('d','M 90 124 Q 100 130 110 124');
+    }
+    if(browL) browL.setAttribute('d', pfx==='gf'?'M 72 87 Q 82 83 92 87':'M 73 83 Q 83 79 93 83');
+    if(browR) browR.setAttribute('d', pfx==='gf'?'M 108 87 Q 118 83 128 87':'M 107 83 Q 117 79 127 83');
+  }
+}
+
+// ── BLINK ──
+function startBlink(pfx){
+  clearInterval(blinkTimer);
+  blinkTimer=setInterval(()=>{
+    const eyeL=document.getElementById(pfx+'-eye-l');
+    const eyeR=document.getElementById(pfx+'-eye-r');
+    if(!eyeL)return;
+    const prev=eyeL.style.transform;
+    eyeL.style.transition='transform 0.06s';eyeR.style.transition='transform 0.06s';
+    eyeL.style.transform='scaleY(0.1)';eyeR.style.transform='scaleY(0.1)';
+    setTimeout(()=>{
+      eyeL.style.transform='';eyeR.style.transform='';
+      eyeL.style.transition='';eyeR.style.transition='';
+    },120);
+  },Math.random()*3000+2000);
+}
+
+function startIdleEmotion(pfx){
+  setInterval(()=>{
+    if(currentEmotion==='normal'){
+      // occasional small expression
+    }
+  },5000);
+}
+
+// ══════════════════════════════════
+//  HEADER & PILL
+// ══════════════════════════════════
+function updateModePill(){
+  const m=MODES[activeMode];
+  const pill=document.getElementById('mode-pill');
+  pill.textContent=m.icon+' '+m.label;
+  pill.style.color=m.color;
+  pill.style.borderColor=`rgba(${m.rgb},0.28)`;
+  pill.style.background=`rgba(${m.rgb},0.08)`;
+}
+function buildWelcomeChips(){
+  const chips=document.getElementById('welcome-chips');
+  if(!chips)return;
+  chips.innerHTML=MODES[activeMode].chips.map(c=>`<div class="chip" onclick="sendChip(this)">${c}</div>`).join('');
+}
+
+// ══════════════════════════════════
+//  MENU / HISTORY
+// ══════════════════════════════════
+function toggleMenu(){document.getElementById('dropdown').classList.toggle('hidden')}
+function closeMenu(){document.getElementById('dropdown').classList.add('hidden')}
+document.addEventListener('click',e=>{if(!e.target.closest('.menu-btn')&&!e.target.closest('#dropdown'))closeMenu()});
+
+function openHist(){renderHist();document.getElementById('hist-panel').classList.add('open')}
+function closeHist(){document.getElementById('hist-panel').classList.remove('open')}
+function renderHist(){
+  const list=document.getElementById('hist-list');
+  if(!sessions.length){list.innerHTML='<div class="hist-empty"><span>💬</span>No chats yet</div>';return}
+  const m=p=>MODES[p]||MODES.normal;
+  list.innerHTML=sessions.slice().reverse().map(s=>`
+    <div class="hist-item ${s.id===currentId?'active':''}" onclick="loadSession('${s.id}')">
       <div class="hi-t">${esc(s.title||'Untitled')}</div>
       <div class="hi-m">
-        <span class="hi-mode" style="color:${m.color};background:rgba(${m.rgb},0.10)">${m.icon} ${m.label}</span>
+        <span class="hi-mode" style="color:${m(s.mode).color};background:rgba(${m(s.mode).rgb},0.10)">${m(s.mode).icon} ${m(s.mode).label}</span>
         <span>${timeAgo(s.updated)}</span>
       </div>
-    </div>`;
-  }).join('');
+    </div>`).join('');
 }
-
-function loadSession(id) {
-  const s = sessions.find(x=>x.id===id); if(!s) return;
-  currentId = id;
-  activeMode = s.mode||'normal';
-  customSystemPrompt = s.customPrompt||'';
-  updateModePill();
-  const chat = document.getElementById('chat'); chat.innerHTML='';
+function loadSession(id){
+  const s=sessions.find(x=>x.id===id);if(!s)return;
+  currentId=id;activeMode=s.mode||'normal';customSys=s.customPrompt||'';
+  updateModePill();setupCharStage();
+  const chat=document.getElementById('chat');chat.innerHTML='';
   s.messages.forEach(m=>appendBubble(m.role,m.content,false));
-  closeHist(); chat.scrollTop = chat.scrollHeight;
+  closeHist();chat.scrollTop=chat.scrollHeight;
 }
-
-function newChat() {
-  currentId = null;
-  const chat = document.getElementById('chat');
-  chat.innerHTML=''; chat.appendChild(makeWelcome());
+function newChat(){
+  currentId=null;
+  const chat=document.getElementById('chat');
+  chat.innerHTML='';chat.appendChild(makeWelcome());
   buildWelcomeChips();
 }
-
-function makeWelcome() {
-  const w = document.createElement('div');
-  w.className='welcome'; w.id='welcome';
-  const m = MODES[activeMode];
-  w.innerHTML=`<div class="w-orb">4U</div><h2>${m.icon} Ready to chat!</h2><p>Powered by Groq — super fast AI, ready for you.</p><div class="chips" id="welcome-chips"></div>`;
+function makeWelcome(){
+  const w=document.createElement('div');w.className='welcome';w.id='welcome';
+  const m=MODES[activeMode];
+  w.innerHTML=`<div class="w-orb">4U</div><h2>${m.icon} Ready to chat!</h2><p>Powered by Groq — fast AI for you.</p><div class="chips" id="welcome-chips"></div>`;
   return w;
 }
-
-function clearAll() {
-  if(!confirm('Delete all chat history?')) return;
-  sessions=[]; localStorage.removeItem('4uai_sessions'); newChat();
+function clearAll(){
+  if(!confirm('Delete all chat history?'))return;
+  sessions=[];localStorage.removeItem('4uai_sessions');newChat();
 }
-
-function saveSession(messages) {
-  if (!currentId){ currentId=Date.now().toString(); sessions.push({id:currentId,title:'',messages:[],updated:Date.now(),mode:activeMode,customPrompt:customSystemPrompt}) }
-  const s = sessions.find(x=>x.id===currentId);
-  s.messages=messages; s.updated=Date.now(); s.mode=activeMode; s.customPrompt=customSystemPrompt;
-  if(!s.title&&messages.length) s.title=messages[0].content.slice(0,48)+(messages[0].content.length>48?'…':'');
+function saveSession(messages){
+  if(!currentId){currentId=Date.now().toString();sessions.push({id:currentId,title:'',messages:[],updated:Date.now(),mode:activeMode,customPrompt:customSys})}
+  const s=sessions.find(x=>x.id===currentId);
+  s.messages=messages;s.updated=Date.now();s.mode=activeMode;s.customPrompt=customSys;
+  if(!s.title&&messages.length)s.title=messages[0].content.slice(0,48)+(messages[0].content.length>48?'…':'');
   localStorage.setItem('4uai_sessions',JSON.stringify(sessions));
 }
-
-function getMsgs() {
-  if(!currentId) return [];
-  const s = sessions.find(x=>x.id===currentId);
-  return s?[...s.messages]:[];
+function getMsgs(){
+  if(!currentId)return[];
+  const s=sessions.find(x=>x.id===currentId);return s?[...s.messages]:[];
 }
-
-function getSystemPrompt() {
-  if (activeMode==='custom') return customSystemPrompt||'You are 4UAI, a helpful AI assistant.';
+function getSys(){
+  if(activeMode==='custom')return customSys||'You are 4UAI, a helpful AI assistant.';
   return MODES[activeMode].system;
 }
 
-// ── API ──
-async function sendMsg() {
-  if (isLoading) return;
-  const key = localStorage.getItem('4uai_key');
-  if (!key){ goApiScreen(); return; }
+// ══════════════════════════════════
+//  SEND MESSAGE
+// ══════════════════════════════════
+async function sendMsg(){
+  if(isLoading)return;
+  const key=localStorage.getItem('4uai_key');
+  if(!key){goApiScreen();return}
+  const inp=document.getElementById('input');
+  const text=inp.value.trim();if(!text)return;
+  inp.value='';autoGrow(inp);toggleSend();
 
-  const inp = document.getElementById('input');
-  const text = inp.value.trim(); if(!text) return;
-  inp.value=''; autoGrow(inp); toggleSend();
+  const w=document.getElementById('welcome');if(w)w.remove();
 
-  const w = document.getElementById('welcome'); if(w) w.remove();
-  appendBubble('user', text);
-  const msgs = getMsgs();
+  // detect emotion from user input
+  if(activeMode==='girlfriend'||activeMode==='boyfriend'){
+    const emo=detectEmotion(text);
+    const pfx=activeMode==='girlfriend'?'gf':'bf';
+    applyEmotion(pfx,emo);
+  }
+
+  appendBubble('user',text);
+  const msgs=getMsgs();
   msgs.push({role:'user',content:text});
   saveSession(msgs);
 
-  isLoading=true; document.getElementById('send-btn').disabled=true;
-
-  const typingEl = document.createElement('div');
+  isLoading=true;document.getElementById('send-btn').disabled=true;
+  const typingEl=document.createElement('div');
   typingEl.className='msg ai';
   typingEl.innerHTML='<div class="msg-av">4U</div><div class="msg-bbl"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
   document.getElementById('chat').appendChild(typingEl);
   scrollBottom();
 
-  try {
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions',{
+  try{
+    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
       method:'POST',
       headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
       body:JSON.stringify({
         model:'llama-3.3-70b-versatile',
         max_tokens:1024,
         messages:[
-          {role:'system',content:getSystemPrompt()},
+          {role:'system',content:getSys()},
           ...msgs.map(m=>({role:m.role==='ai'?'assistant':m.role,content:m.content}))
         ]
       })
     });
-    const data = await res.json();
+    const data=await res.json();
     typingEl.remove();
-    if(data.error) throw new Error(data.error.message);
-    const reply = data.choices[0].message.content;
-    appendBubble('ai', reply);
+    if(data.error)throw new Error(data.error.message);
+    const reply=data.choices[0].message.content;
+    appendBubble('ai',reply);
     msgs.push({role:'ai',content:reply});
     saveSession(msgs);
-  } catch(err) {
+
+    // react to AI response content too
+    if(activeMode==='girlfriend'||activeMode==='boyfriend'){
+      const emo=detectEmotion(reply);
+      const pfx=activeMode==='girlfriend'?'gf':'bf';
+      if(emo!=='normal')applyEmotion(pfx,emo);
+    }
+  }catch(err){
     typingEl.remove();
-    const msg = (err.message||'').toLowerCase().includes('401')||err.message.includes('invalid')
-      ? '🔑 Invalid API key. Tap ⋯ → Change API Key to update it.'
-      : '⚠️ '+err.message;
-    appendBubble('ai', msg);
+    const msg=err.message.includes('401')?'🔑 Invalid API key. Tap ⋯ → Change API Key.':'⚠️ '+err.message;
+    appendBubble('ai',msg);
   }
-
-  isLoading=false; document.getElementById('send-btn').disabled=false; scrollBottom();
+  isLoading=false;document.getElementById('send-btn').disabled=false;scrollBottom();
 }
 
-function appendBubble(role, content, animate=true) {
-  const chat = document.getElementById('chat');
-  const div = document.createElement('div');
-  div.className=`msg ${role}`; if(!animate) div.style.animation='none';
+function appendBubble(role,content,animate=true){
+  const chat=document.getElementById('chat');
+  const div=document.createElement('div');
+  div.className=`msg ${role}`;
+  if(!animate)div.style.animation='none';
+  // add mode class to chat for bubble styling
+  const chatEl=document.getElementById('chat');
+  if(activeMode==='girlfriend')chatEl.className='gf-mode'+(chatEl.classList.contains('has-char')?' has-char':'');
+  else if(activeMode==='boyfriend')chatEl.className='bf-mode'+(chatEl.classList.contains('has-char')?' has-char':'');
   div.innerHTML=`<div class="msg-av">${role==='ai'?'4U':'👤'}</div><div class="msg-bbl">${esc(content).replace(/\n/g,'<br>')}</div>`;
-  chat.appendChild(div); if(animate) scrollBottom();
+  chat.appendChild(div);if(animate)scrollBottom();
 }
 
-function sendChip(el) {
-  const text = el.innerText.replace(/^[^\s]+\s/,'');
-  document.getElementById('input').value=text; sendMsg();
+function sendChip(el){
+  const text=el.innerText.replace(/^[^\s]+\s/,'');
+  document.getElementById('input').value=text;sendMsg();
 }
 
-// ── UTILS ──
-function scrollBottom(){ const c=document.getElementById('chat'); setTimeout(()=>c.scrollTop=c.scrollHeight,60) }
-function handleKey(e){ if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()} }
-function autoGrow(el){ el.style.height='auto'; el.style.height=Math.min(el.scrollHeight,105)+'px' }
-function toggleSend(){ document.getElementById('send-btn').disabled=!document.getElementById('input').value.trim()||isLoading }
-function esc(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+// ══════════════════════════════════
+//  UTILS
+// ══════════════════════════════════
+function scrollBottom(){const c=document.getElementById('chat');setTimeout(()=>c.scrollTop=c.scrollHeight,60)}
+function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}}
+function autoGrow(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,105)+'px'}
+function toggleSend(){document.getElementById('send-btn').disabled=!document.getElementById('input').value.trim()||isLoading}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
 function timeAgo(ts){
   const d=Date.now()-ts;
-  if(d<60000) return 'just now';
-  if(d<3600000) return Math.floor(d/60000)+'m ago';
-  if(d<86400000) return Math.floor(d/3600000)+'h ago';
-  return Math.floor(d/86400000)+'d ago';
+  if(d<60000)return'just now';if(d<3600000)return Math.floor(d/60000)+'m ago';
+  if(d<86400000)return Math.floor(d/3600000)+'h ago';return Math.floor(d/86400000)+'d ago';
 }
 
-// ── INIT ──
-const savedKey = localStorage.getItem('4uai_key');
-if (savedKey) {
-  showScreen('screen-mode');
-} else {
-  showScreen('screen-api');
-}
-updateModePill();
-buildWelcomeChips();
+// ══════════════════════════════════
+//  INIT
+// ══════════════════════════════════
+const savedKey=localStorage.getItem('4uai_key');
+if(savedKey){showScreen('screen-mode')}else{showScreen('screen-api')}
+updateModePill();buildWelcomeChips();
 </script>
 </body>
 </html>
