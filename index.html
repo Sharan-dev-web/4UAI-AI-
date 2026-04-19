@@ -33,7 +33,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   box-shadow:0 40px 100px rgba(0,0,0,0.6),0 0 0 1px rgba(91,140,255,0.06);
   animation:fadeUp 0.45s cubic-bezier(0.23,1,0.32,1) both}
 
-/* logo on screens */
 .logo-row{display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:28px}
 .logomark-sm{width:46px;height:46px;border-radius:16px;
   background:linear-gradient(135deg,var(--acc),var(--acc2));
@@ -45,7 +44,6 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   filter:drop-shadow(0 0 8px rgba(200,168,75,0.3))}
 
-/* ── SCREEN 1: API ── */
 .groq-badge{display:flex;align-items:center;justify-content:center;gap:9px;
   background:rgba(91,140,255,0.08);border:1px solid rgba(91,140,255,0.20);
   border-radius:14px;padding:12px 18px;margin-bottom:22px}
@@ -81,7 +79,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .sec-note{margin-top:14px;text-align:center;font-size:11.5px;color:var(--muted);line-height:1.55}
 .sec-note strong{color:var(--muted2)}
 
-/* ── SCREEN 2: MODE ── */
+/* ── MODE SCREEN ── */
 .mode-grid{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}
 .mode-btn{display:flex;align-items:center;gap:14px;padding:14px 16px;border-radius:15px;
   background:var(--s2);border:1.5px solid var(--border2);cursor:pointer;transition:all 0.2s}
@@ -190,21 +188,10 @@ header{display:flex;align-items:center;justify-content:space-between;
 .brand{display:flex;flex-direction:column;gap:4px;cursor:pointer}
 .brand-name{
   font-family:'Cinzel',serif;font-weight:900;font-size:24px;letter-spacing:3px;line-height:1;
-  background:linear-gradient(
-    135deg,
-    var(--gold1) 0%,
-    var(--gold2) 20%,
-    var(--silver1) 40%,
-    var(--silver2) 50%,
-    var(--silver1) 60%,
-    var(--gold3) 75%,
-    var(--gold2) 88%,
-    var(--gold1) 100%
-  );
+  background:linear-gradient(135deg,var(--gold1) 0%,var(--gold2) 20%,var(--silver1) 40%,var(--silver2) 50%,var(--silver1) 60%,var(--gold3) 75%,var(--gold2) 88%,var(--gold1) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   filter:drop-shadow(0 1px 6px rgba(200,168,75,0.35));
-  background-size:200% 100%;
-  animation:shimmer 4s linear infinite;
+  background-size:200% 100%;animation:shimmer 4s linear infinite;
 }
 @keyframes shimmer{0%{background-position:100% 0}100%{background-position:-100% 0}}
 
@@ -364,6 +351,7 @@ header{display:flex;align-items:center;justify-content:space-between;
     <div class="mdrop-title">NOSTA Modules</div>
     <div class="mdrop-sub">Select your AI experience</div>
   </div>
+
   <!-- NOSTA 0.1 -->
   <div class="mmod active-mod" onclick="selectModule('0.1')">
     <div class="mmod-icon" style="background:rgba(91,140,255,0.12)">🌐</div>
@@ -373,15 +361,17 @@ header{display:flex;align-items:center;justify-content:space-between;
     </div>
     <div class="mmod-badge badge-active" id="badge-01">Active</div>
   </div>
-  <!-- NOSTA 0.2 -->
+
+  <!-- NOSTA 0.2 — icon changed to ↑ arrow, no 18+ -->
   <div class="mmod" onclick="selectModule('0.2')">
-    <div class="mmod-icon" style="background:rgba(244,114,182,0.12)">🔞</div>
+    <div class="mmod-icon" style="background:rgba(244,114,182,0.12);font-size:20px">↑</div>
     <div class="mmod-info">
       <div class="mmod-name" style="color:#f472b6">NOSTA 0.2</div>
       <div class="mmod-desc">Above 18 companion — mature themes</div>
     </div>
-    <div class="mmod-badge" id="badge-02" style="background:rgba(244,114,182,0.10);color:#f472b6;border:1px solid rgba(244,114,182,0.22)">18+</div>
+    <div class="mmod-badge" id="badge-02" style="background:rgba(244,114,182,0.10);color:#f472b6;border:1px solid rgba(244,114,182,0.22)">↑ Adults</div>
   </div>
+
   <!-- NOSTA 0.3 -->
   <div class="mmod disabled">
     <div class="mmod-icon" style="background:rgba(167,139,250,0.10)">🤖</div>
@@ -391,6 +381,7 @@ header{display:flex;align-items:center;justify-content:space-between;
     </div>
     <div class="mmod-badge badge-soon">Soon</div>
   </div>
+
   <!-- NOSTA X -->
   <div class="mmod" onclick="openNostaX()">
     <div class="mmod-icon" style="background:rgba(200,168,75,0.10)">👑</div>
@@ -409,7 +400,6 @@ header{display:flex;align-items:center;justify-content:space-between;
       <div class="nx-logo">NOSTA X</div>
       <div class="nx-sub">Premium Access Verification</div>
     </div>
-    <!-- Steps bar -->
     <div class="nx-steps-bar">
       <div class="nx-dot cur" id="nxd1"></div>
       <div class="nx-dot" id="nxd2"></div>
@@ -547,22 +537,70 @@ const MODES={
     chips:["💬 Let's talk","❓ Ask anything","🎯 Help me out","💡 Give me ideas","📝 Write something","✨ Surprise me"]}
 };
 
+const GROQ_MODEL='llama-3.3-70b-versatile';
+
+// Try direct first, then fallback proxies
+async function groqFetch(key, messages){
+  const body=JSON.stringify({
+    model:GROQ_MODEL,
+    max_tokens:1024,
+    temperature:0.85,
+    messages:messages
+  });
+  const headers={'Content-Type':'application/json','Authorization':'Bearer '+key};
+
+  // Attempt 1: direct
+  try{
+    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',
+      {method:'POST',headers,body});
+    if(r.status!==0)return r; // got a real response (even error codes)
+  }catch(e){/* CORS blocked, try proxy */}
+
+  // Attempt 2: corsproxy.io
+  try{
+    const r=await fetch('https://corsproxy.io/?https://api.groq.com/openai/v1/chat/completions',
+      {method:'POST',headers,body});
+    if(r.status!==0)return r;
+  }catch(e){}
+
+  // Attempt 3: allorigins
+  // allorigins wraps response so we handle it inline
+  const aoRes=await fetch(
+    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://api.groq.com/openai/v1/chat/completions'),
+    {method:'POST',headers,body}
+  );
+  return aoRes;
+}
+
 let sessions=JSON.parse(localStorage.getItem('4uai_s')||'[]');
 let currentId=null,isLoading=false,activeMode='normal',customSys='';
 let activeModule='0.1';
 
-// ── API SCREEN ──
-function toggleVis(){const i=document.getElementById('api-input'),b=document.querySelector('.eye-btn');i.type=i.type==='password'?'text':'password';b.textContent=i.type==='password'?'👁':'🙈'}
+/* ── API SCREEN ── */
+function toggleVis(){
+  const i=document.getElementById('api-input'),b=document.querySelector('.eye-btn');
+  i.type=i.type==='password'?'text':'password';
+  b.textContent=i.type==='password'?'👁':'🙈';
+}
 function submitKey(){
   const key=document.getElementById('api-input').value.trim();
   const err=document.getElementById('api-err');
-  if(!key||key.length<10){err.classList.add('show');document.getElementById('api-input').classList.add('err');return}
-  err.classList.remove('show');document.getElementById('api-input').classList.remove('err');
-  localStorage.setItem('4uai_key',key);showScreen('screen-mode');
+  if(!key||key.length<10){
+    err.classList.add('show');
+    document.getElementById('api-input').classList.add('err');
+    return;
+  }
+  err.classList.remove('show');
+  document.getElementById('api-input').classList.remove('err');
+  localStorage.setItem('4uai_key',key);
+  showScreen('screen-mode');
 }
-function goApiScreen(){document.getElementById('api-input').value=localStorage.getItem('4uai_key')||'';showScreen('screen-api')}
+function goApiScreen(){
+  document.getElementById('api-input').value=localStorage.getItem('4uai_key')||'';
+  showScreen('screen-api');
+}
 
-// ── MODE SCREEN ──
+/* ── MODE SCREEN ── */
 function selMode(m){
   activeMode=m;
   document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('sel'));
@@ -571,13 +609,19 @@ function selMode(m){
   m==='custom'?ca.classList.add('vis'):ca.classList.remove('vis');
 }
 function startChat(){
-  if(activeMode==='custom'){const cp=document.getElementById('custom-prompt').value.trim();customSys=cp||'You are 4UAI, a helpful AI assistant.'}
+  if(activeMode==='custom'){
+    const cp=document.getElementById('custom-prompt').value.trim();
+    customSys=cp||'You are 4UAI, a helpful AI assistant.';
+  }
   showScreen(null);updatePill();buildChips();
 }
 function goMode(){showScreen('screen-mode')}
-function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));if(id)document.getElementById(id).classList.remove('hidden')}
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
+  if(id)document.getElementById(id).classList.remove('hidden');
+}
 
-// ── MODULE DROPDOWN ──
+/* ── MODULE DROPDOWN ── */
 function toggleModuleDrop(){
   const d=document.getElementById('module-drop');
   d.classList.toggle('hidden');
@@ -600,11 +644,10 @@ function selectModule(v){
   }
 }
 
-// ── NOSTA X ──
+/* ── NOSTA X ── */
 function openNostaX(){
   closeModuleDrop();
   document.getElementById('nx-overlay').classList.remove('hidden');
-  // reset steps
   document.querySelectorAll('.nx-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('nx-step-1').classList.add('active');
   document.getElementById('nxd1').className='nx-dot cur';
@@ -631,14 +674,15 @@ function nxStep3(){
   document.getElementById('nxd2').className='nx-dot done';
   document.getElementById('nxd3').className='nx-dot cur';
 }
-// click outside NX overlay
 document.getElementById('nx-overlay').addEventListener('click',function(e){if(e.target===this)closeNX()});
 
-// ── HEADER / MENU ──
+/* ── HEADER / MENU ── */
 function updatePill(){
   const m=MODES[activeMode],pill=document.getElementById('mode-pill');
   pill.textContent=m.icon+' '+m.label;
-  pill.style.color=m.color;pill.style.borderColor=`rgba(${m.rgb},0.28)`;pill.style.background=`rgba(${m.rgb},0.08)`;
+  pill.style.color=m.color;
+  pill.style.borderColor=`rgba(${m.rgb},0.28)`;
+  pill.style.background=`rgba(${m.rgb},0.08)`;
 }
 function buildChips(){
   const el=document.getElementById('chips');if(!el)return;
@@ -651,96 +695,201 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('.menu-btn')&&!e.target.closest('#dropdown'))closeMenu();
 });
 
-// ── HISTORY ──
+/* ── HISTORY ── */
 function openHist(){renderHist();document.getElementById('hist-panel').classList.add('open')}
 function closeHist(){document.getElementById('hist-panel').classList.remove('open')}
 function renderHist(){
   const list=document.getElementById('hist-list');
-  if(!sessions.length){list.innerHTML='<div class="hist-empty"><span>💬</span>No chats yet.<br>Start a conversation!</div>';return}
+  if(!sessions.length){
+    list.innerHTML='<div class="hist-empty"><span>💬</span>No chats yet.<br>Start a conversation!</div>';
+    return;
+  }
   const m=p=>MODES[p]||MODES.normal;
   list.innerHTML=sessions.slice().reverse().map(s=>`
     <div class="hist-item ${s.id===currentId?'active':''}" onclick="loadSess('${s.id}')">
       <div class="hi-t">${esc(s.title||'Untitled chat')}</div>
-      <div class="hi-m"><span class="hi-mode" style="color:${m(s.mode).color};background:rgba(${m(s.mode).rgb},0.10)">${m(s.mode).icon} ${m(s.mode).label}</span><span>${timeAgo(s.updated)}</span></div>
+      <div class="hi-m">
+        <span class="hi-mode" style="color:${m(s.mode).color};background:rgba(${m(s.mode).rgb},0.10)">
+          ${m(s.mode).icon} ${m(s.mode).label}
+        </span>
+        <span>${timeAgo(s.updated)}</span>
+      </div>
     </div>`).join('');
 }
 function loadSess(id){
   const s=sessions.find(x=>x.id===id);if(!s)return;
   currentId=id;activeMode=s.mode||'normal';customSys=s.customPrompt||'';
-  updatePill();const chat=document.getElementById('chat');chat.innerHTML='';
+  updatePill();
+  const chat=document.getElementById('chat');chat.innerHTML='';
   s.messages.forEach(m=>appendBubble(m.role,m.content,false));
   closeHist();chat.scrollTop=chat.scrollHeight;
 }
-function newChat(){currentId=null;const c=document.getElementById('chat');c.innerHTML='';c.appendChild(makeWelcome());buildChips()}
+function newChat(){
+  currentId=null;
+  const c=document.getElementById('chat');
+  c.innerHTML='';
+  c.appendChild(makeWelcome());
+  buildChips();
+}
 function makeWelcome(){
   const w=document.createElement('div');w.className='welcome';w.id='welcome';
   w.innerHTML=`<div class="w-orb">4U</div><h2>Ask me anything</h2><p>Powered by NOSTA ${activeModule} — your intelligent companion.</p><div class="chips" id="chips"></div>`;
   return w;
 }
-function clearAll(){if(!confirm('Delete all chat history?'))return;sessions=[];localStorage.removeItem('4uai_s');newChat()}
+function clearAll(){
+  if(!confirm('Delete all chat history?'))return;
+  sessions=[];localStorage.removeItem('4uai_s');newChat();
+}
 function saveSess(messages){
-  if(!currentId){currentId=Date.now().toString();sessions.push({id:currentId,title:'',messages:[],updated:Date.now(),mode:activeMode,customPrompt:customSys})}
+  if(!currentId){
+    currentId=Date.now().toString();
+    sessions.push({id:currentId,title:'',messages:[],updated:Date.now(),mode:activeMode,customPrompt:customSys});
+  }
   const s=sessions.find(x=>x.id===currentId);
   s.messages=messages;s.updated=Date.now();s.mode=activeMode;s.customPrompt=customSys;
-  if(!s.title&&messages.length)s.title=messages[0].content.slice(0,48)+(messages[0].content.length>48?'…':'');
+  if(!s.title&&messages.length)
+    s.title=messages[0].content.slice(0,48)+(messages[0].content.length>48?'…':'');
   localStorage.setItem('4uai_s',JSON.stringify(sessions));
 }
-function getMsgs(){if(!currentId)return[];const s=sessions.find(x=>x.id===currentId);return s?[...s.messages]:[]}
-function getSys(){if(activeMode==='custom')return customSys||'You are 4UAI.';return MODES[activeMode].sys}
+function getMsgs(){
+  if(!currentId)return[];
+  const s=sessions.find(x=>x.id===currentId);
+  return s?[...s.messages]:[];
+}
+function getSys(){
+  if(activeMode==='custom')return customSys||'You are 4UAI.';
+  return MODES[activeMode].sys;
+}
 
-// ── SEND ──
+/* ── SEND (fixed fetch) ── */
 async function sendMsg(){
   if(isLoading)return;
-  const key=localStorage.getItem('4uai_key');if(!key){goApiScreen();return}
+  const key=localStorage.getItem('4uai_key');
+  if(!key){goApiScreen();return}
   const inp=document.getElementById('input');
-  const text=inp.value.trim();if(!text)return;
+  const text=inp.value.trim();
+  if(!text)return;
   inp.value='';autoGrow(inp);toggleSend();
   const w=document.getElementById('welcome');if(w)w.remove();
   appendBubble('user',text);
-  const msgs=getMsgs();msgs.push({role:'user',content:text});saveSess(msgs);
-  isLoading=true;document.getElementById('send-btn').disabled=true;
-  const t=document.createElement('div');t.className='msg ai';
+  const msgs=getMsgs();
+  msgs.push({role:'user',content:text});
+  saveSess(msgs);
+
+  isLoading=true;
+  document.getElementById('send-btn').disabled=true;
+
+  // Typing indicator
+  const t=document.createElement('div');
+  t.className='msg ai';t.id='typing-indicator';
   t.innerHTML='<div class="msg-av">4U</div><div class="msg-bbl"><div class="typing-dots"><span></span><span></span><span></span></div></div>';
-  document.getElementById('chat').appendChild(t);scrollBottom();
+  document.getElementById('chat').appendChild(t);
+  scrollBottom();
+
   try{
-    const res=await fetch('https://api.groq.com/openai/v1/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+key},
-      body:JSON.stringify({model:'llama-3.3-70b-versatile',max_tokens:1024,
-        messages:[{role:'system',content:getSys()},...msgs.map(m=>({role:m.role==='ai'?'assistant':m.role,content:m.content}))]})
-    });
-    const data=await res.json();t.remove();
-    if(data.error)throw new Error(data.error.message);
-    const reply=data.choices[0].message.content;
-    appendBubble('ai',reply);msgs.push({role:'ai',content:reply});saveSess(msgs);
+    const apiMessages=[
+      {role:'system',content:getSys()},
+      ...msgs.map(m=>({role:m.role==='ai'?'assistant':m.role,content:m.content}))
+    ];
+
+    const res=await groqFetch(key,apiMessages);
+
+    // Remove typing indicator
+    const indicator=document.getElementById('typing-indicator');
+    if(indicator)indicator.remove();
+
+    if(!res.ok){
+      let errMsg='';
+      try{
+        const errData=await res.json();
+        errMsg=errData?.error?.message||`HTTP ${res.status}`;
+      }catch{
+        errMsg=`HTTP ${res.status} — ${res.statusText}`;
+      }
+      if(res.status===401){
+        appendBubble('ai','🔑 Invalid API key. Tap ⋯ → Change API Key to update it.');
+      } else if(res.status===429){
+        appendBubble('ai','⏳ Rate limit reached. Please wait a moment and try again.');
+      } else if(res.status===400){
+        appendBubble('ai','⚠️ Bad request: '+errMsg);
+      } else {
+        appendBubble('ai','⚠️ Error '+res.status+': '+errMsg);
+      }
+    } else {
+      const data=await res.json();
+      const reply=data?.choices?.[0]?.message?.content;
+      if(reply){
+        appendBubble('ai',reply);
+        msgs.push({role:'ai',content:reply});
+        saveSess(msgs);
+      } else {
+        appendBubble('ai','⚠️ No response received. Please try again.');
+      }
+    }
   }catch(err){
-    t.remove();
-    appendBubble('ai',err.message.includes('401')?'🔑 Invalid API key. Tap ⋯ → Change API Key.':'⚠️ '+err.message);
+    const indicator=document.getElementById('typing-indicator');
+    if(indicator)indicator.remove();
+
+    // Friendly error messages
+    let friendlyMsg='';
+    const msg=err.message||'';
+    if(msg.includes('Failed to fetch')||msg.includes('NetworkError')||msg.includes('network')||msg.includes('fetch')){
+      friendlyMsg='📡 All connection attempts failed.\n\n✅ Your key is correct?\n✅ Internet is on?\n\nTry: open this file in Chrome or Edge browser (not Samsung Internet).';
+    } else {
+      friendlyMsg='⚠️ '+msg;
+    }
+    appendBubble('ai',friendlyMsg);
   }
-  isLoading=false;document.getElementById('send-btn').disabled=false;scrollBottom();
-}
-function appendBubble(role,content,animate=true){
-  const chat=document.getElementById('chat');
-  const div=document.createElement('div');div.className=`msg ${role}`;
-  if(!animate)div.style.animation='none';
-  div.innerHTML=`<div class="msg-av">${role==='ai'?'4U':'👤'}</div><div class="msg-bbl">${esc(content).replace(/\n/g,'<br>')}</div>`;
-  chat.appendChild(div);if(animate)scrollBottom();
-}
-function sendChip(el){document.getElementById('input').value=el.innerText.replace(/^[^\s]+\s/,'');sendMsg()}
-function scrollBottom(){const c=document.getElementById('chat');setTimeout(()=>c.scrollTop=c.scrollHeight,60)}
-function handleKey(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}}
-function autoGrow(el){el.style.height='auto';el.style.height=Math.min(el.scrollHeight,120)+'px'}
-function toggleSend(){document.getElementById('send-btn').disabled=!document.getElementById('input').value.trim()||isLoading}
-function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')}
-function timeAgo(ts){
-  const d=Date.now()-ts;
-  if(d<60000)return'just now';if(d<3600000)return Math.floor(d/60000)+'m ago';
-  if(d<86400000)return Math.floor(d/3600000)+'h ago';return Math.floor(d/86400000)+'d ago';
+
+  isLoading=false;
+  document.getElementById('send-btn').disabled=false;
+  toggleSend();
+  scrollBottom();
 }
 
-// INIT
-if(localStorage.getItem('4uai_key'))showScreen('screen-mode');else showScreen('screen-api');
+function appendBubble(role,content,animate=true){
+  const chat=document.getElementById('chat');
+  const div=document.createElement('div');
+  div.className=`msg ${role}`;
+  if(!animate)div.style.animation='none';
+  div.innerHTML=`<div class="msg-av">${role==='ai'?'4U':'👤'}</div><div class="msg-bbl">${esc(content).replace(/\n/g,'<br>')}</div>`;
+  chat.appendChild(div);
+  if(animate)scrollBottom();
+}
+function sendChip(el){
+  document.getElementById('input').value=el.innerText.replace(/^[^\s]+\s/,'');
+  sendMsg();
+}
+function scrollBottom(){
+  const c=document.getElementById('chat');
+  setTimeout(()=>c.scrollTop=c.scrollHeight,60);
+}
+function handleKey(e){
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}
+}
+function autoGrow(el){
+  el.style.height='auto';
+  el.style.height=Math.min(el.scrollHeight,120)+'px';
+}
+function toggleSend(){
+  document.getElementById('send-btn').disabled=!document.getElementById('input').value.trim()||isLoading;
+}
+function esc(s){
+  return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function timeAgo(ts){
+  const d=Date.now()-ts;
+  if(d<60000)return'just now';
+  if(d<3600000)return Math.floor(d/60000)+'m ago';
+  if(d<86400000)return Math.floor(d/3600000)+'h ago';
+  return Math.floor(d/86400000)+'d ago';
+}
+
+/* ── INIT ── */
+if(localStorage.getItem('4uai_key'))showScreen('screen-mode');
+else showScreen('screen-api');
 updatePill();buildChips();
 </script>
 </body>
 </html>
+
