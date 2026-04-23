@@ -284,6 +284,16 @@ header{display:flex;align-items:center;justify-content:space-between;
 #send-btn:disabled{opacity:0.35;box-shadow:none;cursor:default}
 #send-btn:not(:disabled):active{transform:scale(0.92)}
 
+/* ── MEDIA UP ARROW ── */
+.up-arrow-btn{width:36px;height:36px;border-radius:11px;border:1px solid var(--border2);background:var(--s1);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background 0.2s,border-color 0.2s;color:var(--muted2);font-size:15px;font-weight:700;line-height:1}
+.up-arrow-btn:active{background:var(--s2);border-color:rgba(91,140,255,0.3)}
+.media-popup{position:absolute;bottom:72px;left:16px;background:var(--s1);border:1px solid var(--border2);border-radius:16px;overflow:hidden;z-index:200;box-shadow:0 20px 50px rgba(0,0,0,0.6),0 0 0 1px rgba(91,140,255,0.06);min-width:200px;transform-origin:bottom left;animation:popIn 0.2s cubic-bezier(0.23,1,0.32,1) both}
+.media-popup.hidden{display:none}
+.media-opt{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;transition:background 0.15s;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text);font-family:'DM Sans',sans-serif}
+.media-opt:last-child{border-bottom:none}
+.media-opt:active{background:rgba(255,255,255,0.05)}
+.media-opt-icon{font-size:18px;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
 /* ANIMATIONS */
 @keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
@@ -333,12 +343,31 @@ header{display:flex;align-items:center;justify-content:space-between;
     </div>
     <div class="s-title">Choose your AI mode</div>
     <div class="s-sub" style="margin-bottom:18px">Pick a personality for your assistant</div>
-    <div class="mode-grid">
+    <div class="mode-grid" id="mode-grid-main">
       <div class="mode-btn sel" data-m="normal" onclick="selMode('normal')"><div class="m-icon">🤖</div><div class="m-info"><div class="m-name">Normal AI</div><div class="m-desc">Smart helpful assistant</div></div><div class="m-chk">✓</div></div>
-      <div class="mode-btn" data-m="girlfriend" onclick="selMode('girlfriend')"><div class="m-icon">💕</div><div class="m-info"><div class="m-name">Girlfriend AI</div><div class="m-desc">Warm, caring & emotionally open</div></div><div class="m-chk">✓</div></div>
-      <div class="mode-btn" data-m="boyfriend" onclick="selMode('boyfriend')"><div class="m-icon">💙</div><div class="m-info"><div class="m-name">Boyfriend AI</div><div class="m-desc">Supportive, calm & always there</div></div><div class="m-chk">✓</div></div>
       <div class="mode-btn" data-m="hacker" onclick="selMode('hacker')"><div class="m-icon">💻</div><div class="m-info"><div class="m-name">Cybersecurity Helper</div><div class="m-desc">CTF, ethical hacking & security</div></div><div class="m-chk">✓</div></div>
       <div class="mode-btn" data-m="custom" onclick="selMode('custom')"><div class="m-icon">✏️</div><div class="m-info"><div class="m-name">Custom</div><div class="m-desc">Define your own AI personality</div></div><div class="m-chk">✓</div></div>
+      <div class="mode-btn" data-m="hidden" onclick="openHiddenModal()" style="--mc:#6b7280;--mr:107,114,128"><div class="m-icon" style="background:rgba(107,114,128,0.12)">🔒</div><div class="m-info"><div class="m-name" style="color:#9ca3af">Hidden</div><div class="m-desc">Unlock with secret code</div></div><div class="m-chk" style="border-color:rgba(107,114,128,0.3)"></div></div>
+    </div>
+    <!-- Unlocked GF/BF modes (shown after code) -->
+    <div class="mode-grid" id="mode-grid-unlocked" style="margin-top:-2px;display:none">
+      <div class="mode-btn" data-m="girlfriend" onclick="selMode('girlfriend')"><div class="m-icon">💕</div><div class="m-info"><div class="m-name">Girlfriend AI</div><div class="m-desc">Warm, caring & emotionally open</div></div><div class="m-chk">✓</div></div>
+      <div class="mode-btn" data-m="boyfriend" onclick="selMode('boyfriend')"><div class="m-icon">💙</div><div class="m-info"><div class="m-name">Boyfriend AI</div><div class="m-desc">Supportive, calm & always there</div></div><div class="m-chk">✓</div></div>
+    </div>
+
+    <!-- Hidden code modal -->
+    <div id="hidden-modal" style="display:none;position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.75);backdrop-filter:blur(8px);align-items:center;justify-content:center;padding:20px">
+      <div style="background:var(--s1);border:1px solid var(--border2);border-radius:20px;padding:28px 22px;width:100%;max-width:340px;box-shadow:0 40px 80px rgba(0,0,0,0.7);animation:fadeUp 0.3s cubic-bezier(0.23,1,0.32,1) both">
+        <div style="text-align:center;margin-bottom:18px">
+          <div style="font-size:32px;margin-bottom:8px">🔐</div>
+          <div style="font-family:'DM Sans',sans-serif;font-weight:700;font-size:16px;margin-bottom:5px">Enter Secret Code</div>
+          <div style="font-size:12.5px;color:var(--muted2);line-height:1.55">SC CODE 04 required to unlock hidden modes</div>
+        </div>
+        <input id="hidden-code-input" class="txt-in" type="password" placeholder="Enter code…" style="margin-bottom:8px;text-align:center;letter-spacing:3px;font-size:16px">
+        <div id="hidden-code-err" style="font-size:12px;color:#f87171;text-align:center;margin-bottom:10px;display:none">❌ Invalid code. Try again.</div>
+        <button class="primary-btn" onclick="checkHiddenCode()" style="margin-bottom:10px"><span>Unlock</span><span>🔓</span></button>
+        <button onclick="closeHiddenModal()" style="width:100%;padding:11px;border-radius:12px;border:1px solid var(--border2);background:transparent;font-family:'DM Sans',sans-serif;font-size:13.5px;color:var(--muted2);cursor:pointer">Cancel</button>
+      </div>
     </div>
     <textarea class="custom-ta" id="custom-prompt" placeholder="Describe your AI personality…"></textarea>
     <button class="primary-btn" onclick="startChat()"><span>Start Chatting</span><span>✦</span></button>
@@ -504,9 +533,18 @@ header{display:flex;align-items:center;justify-content:space-between;
   </div>
 </div>
 
+<!-- MEDIA POPUP -->
+<div class="media-popup hidden" id="media-popup">
+  <div class="media-opt" onclick="mediaOpt('upload-image')"><div class="media-opt-icon" style="background:rgba(91,140,255,0.12)">🖼️</div>Upload Image</div>
+  <div class="media-opt" onclick="mediaOpt('generate-image')"><div class="media-opt-icon" style="background:rgba(167,139,250,0.12)">✨</div>Generate Image</div>
+  <div class="media-opt" onclick="mediaOpt('upload-video')"><div class="media-opt-icon" style="background:rgba(56,189,248,0.12)">🎬</div>Upload Video</div>
+  <div class="media-opt" onclick="mediaOpt('generate-video')"><div class="media-opt-icon" style="background:rgba(74,222,128,0.12)">🎥</div>Generate Video</div>
+</div>
+
 <!-- INPUT -->
 <div class="input-area">
   <div class="input-bar">
+    <button class="up-arrow-btn" onclick="toggleMediaPopup()" id="up-arrow-btn">&#8679;</button>
     <textarea id="input" rows="1" placeholder="Ask anything…" onkeydown="handleKey(event)" oninput="autoGrow(this);toggleSend()"></textarea>
     <button id="send-btn" disabled onclick="sendMsg()">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
@@ -601,6 +639,38 @@ function goApiScreen(){
 }
 
 /* ── MODE SCREEN ── */
+function openHiddenModal(){
+  const m=document.getElementById('hidden-modal');
+  m.style.display='flex';
+  document.getElementById('hidden-code-input').value='';
+  document.getElementById('hidden-code-err').style.display='none';
+  setTimeout(()=>document.getElementById('hidden-code-input').focus(),100);
+}
+function closeHiddenModal(){
+  document.getElementById('hidden-modal').style.display='none';
+}
+function checkHiddenCode(){
+  const val=document.getElementById('hidden-code-input').value.trim();
+  if(val==='4UAIHID66'){
+    closeHiddenModal();
+    document.getElementById('mode-grid-unlocked').style.display='flex';
+    // swap Hidden btn style to show unlocked
+    const hBtn=document.querySelector('.mode-btn[data-m="hidden"]');
+    hBtn.querySelector('.m-icon').textContent='🔓';
+    hBtn.querySelector('.m-name').textContent='Hidden (Unlocked)';
+    hBtn.querySelector('.m-desc').textContent='Girlfriend & Boyfriend AI unlocked';
+  } else {
+    document.getElementById('hidden-code-err').style.display='block';
+    document.getElementById('hidden-code-input').style.borderColor='#f87171';
+    setTimeout(()=>document.getElementById('hidden-code-input').style.borderColor='',1200);
+  }
+}
+// allow Enter key in code input
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('hidden-code-input').addEventListener('keydown',e=>{
+    if(e.key==='Enter')checkHiddenCode();
+  });
+});
 function selMode(m){
   activeMode=m;
   document.querySelectorAll('.mode-btn').forEach(b=>b.classList.remove('sel'));
@@ -884,6 +954,23 @@ function timeAgo(ts){
   if(d<86400000)return Math.floor(d/3600000)+'h ago';
   return Math.floor(d/86400000)+'d ago';
 }
+
+/* ── MEDIA POPUP ── */
+function toggleMediaPopup(){
+  const p=document.getElementById('media-popup');
+  p.classList.toggle('hidden');
+  closeMenu();closeModuleDrop();
+}
+function closeMediaPopup(){document.getElementById('media-popup').classList.add('hidden')}
+function mediaOpt(type){
+  closeMediaPopup();
+  const labels={'upload-image':'📎 Image upload coming soon!','generate-image':'✨ Image generation coming soon!','upload-video':'🎬 Video upload coming soon!','generate-video':'🎥 Video generation coming soon!'};
+  appendBubble('ai',labels[type]||'Coming soon!');
+  scrollBottom();
+}
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#up-arrow-btn')&&!e.target.closest('#media-popup'))closeMediaPopup();
+});
 
 /* ── INIT ── */
 if(localStorage.getItem('4uai_key'))showScreen('screen-mode');
