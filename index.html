@@ -20,7 +20,118 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:'DM San
 body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:radial-gradient(ellipse 80% 60% at 20% 0%,rgba(91,140,255,0.10) 0%,transparent 60%),
              radial-gradient(ellipse 60% 50% at 80% 100%,rgba(167,139,250,0.09) 0%,transparent 60%)}
-#app{position:relative;z-index:1;height:100%;display:flex;flex-direction:column;max-width:480px;margin:0 auto}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE LAYOUT — MOBILE vs PC
+   ═══════════════════════════════════════════ */
+
+/* MOBILE default: single column, full height */
+#app{
+  position:relative;z-index:1;height:100%;
+  display:flex;flex-direction:column;
+  max-width:480px;margin:0 auto;
+}
+
+/* PC layout: sidebar + chat panel */
+@media(min-width:768px){
+  body{overflow:hidden}
+  #app{
+    max-width:100%;
+    flex-direction:row;
+    height:100vh;
+  }
+
+  /* PC Sidebar */
+  #pc-sidebar{
+    width:300px;min-width:260px;max-width:320px;
+    background:var(--s1);
+    border-right:1px solid var(--border2);
+    display:flex;flex-direction:column;
+    height:100vh;
+    flex-shrink:0;
+    position:relative;
+    z-index:10;
+  }
+  .pc-sidebar-brand{
+    padding:24px 22px 18px;
+    border-bottom:1px solid var(--border);
+    display:flex;align-items:center;gap:12px;
+  }
+  .pc-logomark{
+    width:40px;height:40px;border-radius:13px;
+    background:linear-gradient(135deg,var(--acc),var(--acc2));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Cinzel',serif;font-weight:900;font-size:13px;color:#fff;
+    box-shadow:0 6px 20px rgba(91,140,255,0.35);flex-shrink:0;
+  }
+  .pc-brand-name{
+    font-family:'Cinzel',serif;font-weight:900;font-size:20px;letter-spacing:2px;
+    background:linear-gradient(135deg,var(--gold1) 0%,var(--gold2) 20%,var(--silver1) 40%,var(--silver2) 50%,var(--silver1) 60%,var(--gold3) 75%,var(--gold2) 88%,var(--gold1) 100%);
+    -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+    background-size:200% 100%;animation:shimmer 4s linear infinite;
+  }
+  .pc-module-pill{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(91,140,255,0.10);border:1px solid rgba(91,140,255,0.20);
+    border-radius:20px;padding:3px 9px;font-size:10px;color:var(--acc);
+    margin-top:4px;cursor:pointer;width:fit-content;
+  }
+  .pc-module-dot{width:5px;height:5px;border-radius:50%;background:var(--acc);animation:pulse 2s ease-in-out infinite}
+
+  .pc-sidebar-actions{padding:14px 16px;border-bottom:1px solid var(--border);display:flex;gap:8px}
+  .pc-new-btn{flex:1;padding:10px;border-radius:11px;border:1px solid rgba(91,140,255,0.25);
+    background:rgba(91,140,255,0.07);color:var(--acc);font-family:'DM Sans',sans-serif;
+    font-size:13px;font-weight:500;cursor:pointer;transition:background 0.2s;text-align:center}
+  .pc-new-btn:hover{background:rgba(91,140,255,0.14)}
+  .pc-settings-btn{width:38px;height:38px;border-radius:11px;border:1px solid var(--border2);
+    background:var(--s2);display:flex;align-items:center;justify-content:center;
+    cursor:pointer;font-size:15px;transition:background 0.2s;flex-shrink:0}
+  .pc-settings-btn:hover{background:var(--s3)}
+
+  .pc-hist-label{padding:14px 18px 8px;font-size:11px;font-weight:600;color:var(--muted);letter-spacing:1px;text-transform:uppercase}
+  .pc-hist-list{flex:1;overflow-y:auto;padding:0 10px 10px}
+  .pc-hist-list::-webkit-scrollbar{width:4px}
+  .pc-hist-list::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+  .pc-hist-item{padding:10px 12px;border-radius:10px;cursor:pointer;transition:background 0.15s;margin-bottom:3px;border:1px solid transparent}
+  .pc-hist-item:hover{background:var(--s2)}
+  .pc-hist-item.active{background:rgba(91,140,255,0.10);border-color:rgba(91,140,255,0.18)}
+  .pc-hi-t{font-size:13px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:2px}
+  .pc-hi-m{font-size:11px;color:var(--muted);display:flex;align-items:center;gap:5px}
+  .pc-mode-badge{padding:1px 7px;border-radius:8px;font-weight:600;font-size:10px}
+  .pc-hist-empty{text-align:center;padding:30px 16px;color:var(--muted);font-size:12.5px}
+
+  .pc-sidebar-footer{padding:14px 16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:8px}
+  .pc-mode-row{display:flex;align-items:center;justify-content:space-between}
+  .pc-mode-lbl{font-size:12px;color:var(--muted2);font-weight:500}
+  .pc-mode-pill-side{display:flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;
+    font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid;transition:opacity 0.2s}
+  .pc-mode-pill-side:hover{opacity:0.75}
+  .pc-footer-btns{display:flex;gap:7px}
+  .pc-ftr-btn{flex:1;padding:8px;border-radius:10px;border:1px solid var(--border2);
+    background:transparent;font-family:'DM Sans',sans-serif;font-size:12px;
+    color:var(--muted2);cursor:pointer;transition:background 0.2s;text-align:center}
+  .pc-ftr-btn:hover{background:var(--s2)}
+  .pc-ftr-btn.danger{color:#f87171}
+  .pc-ftr-btn.danger:hover{background:rgba(248,113,113,0.08)}
+
+  /* PC main chat area */
+  #pc-main{
+    flex:1;display:flex;flex-direction:column;min-width:0;height:100vh;
+  }
+
+  /* Hide mobile-only elements on PC */
+  header{display:none!important}
+  #hist-panel{display:none!important}
+  #dropdown{display:none!important}
+  #pc-sidebar{display:flex!important}
+  #pc-main{display:flex!important}
+}
+
+/* Mobile: hide PC sidebar/main wrapper */
+@media(max-width:767px){
+  #pc-sidebar{display:none}
+  #pc-main{display:contents}
+}
 
 /* ── SCREENS ── */
 .screen{position:fixed;inset:0;z-index:300;display:flex;align-items:center;justify-content:center;padding:20px;background:var(--bg);overflow-y:auto}
@@ -43,6 +154,22 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
   background:linear-gradient(135deg,var(--gold1) 0%,var(--gold2) 30%,var(--silver1) 55%,var(--gold3) 75%,var(--gold2) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
   filter:drop-shadow(0 0 8px rgba(200,168,75,0.3))}
+
+/* ── API PROVIDER SELECTOR ── */
+.provider-tabs{display:flex;gap:8px;margin-bottom:18px;background:var(--s2);border-radius:14px;padding:5px}
+.ptab{flex:1;padding:9px 10px;border-radius:10px;border:none;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;
+  color:var(--muted2);background:transparent;cursor:pointer;
+  transition:all 0.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.ptab.active{background:var(--s1);color:var(--text);
+  box-shadow:0 2px 8px rgba(0,0,0,0.4)}
+.ptab-icon{font-size:15px}
+.provider-info{background:rgba(91,140,255,0.06);border:1px solid rgba(91,140,255,0.14);
+  border-radius:12px;padding:10px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px}
+.provider-info.muapi{background:rgba(56,189,248,0.06);border-color:rgba(56,189,248,0.18)}
+.pi-icon{font-size:20px}
+.pi-name{font-family:'Cinzel',serif;font-weight:700;font-size:13px;letter-spacing:0.8px}
+.pi-sub{font-size:11px;color:var(--muted2);margin-top:2px}
 
 .groq-badge{display:flex;align-items:center;justify-content:center;gap:9px;
   background:rgba(91,140,255,0.08);border:1px solid rgba(91,140,255,0.20);
@@ -180,7 +307,7 @@ body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
 .nx-dot.done{background:var(--gold2)}
 .nx-dot.cur{background:var(--gold1)}
 
-/* ── HEADER ── */
+/* ── HEADER (mobile only) ── */
 header{display:flex;align-items:center;justify-content:space-between;
   padding:16px 18px 12px;border-bottom:1px solid var(--border);
   background:rgba(8,9,13,0.88);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
@@ -223,7 +350,7 @@ header{display:flex;align-items:center;justify-content:space-between;
 .dd-item:active{background:rgba(255,255,255,0.05)}
 .dd-item.danger{color:#f87171}
 
-/* HISTORY */
+/* HISTORY (mobile) */
 #hist-panel{position:fixed;inset:0;z-index:200;display:flex;pointer-events:none}
 #hist-panel.open{pointer-events:all}
 .hist-bd{position:absolute;inset:0;background:rgba(0,0,0,0.55);backdrop-filter:blur(4px);opacity:0;transition:opacity 0.3s}
@@ -251,17 +378,26 @@ header{display:flex;align-items:center;justify-content:space-between;
 /* CHAT */
 #chat{flex:1;overflow-y:auto;padding:20px 16px 8px;display:flex;flex-direction:column;gap:16px;scroll-behavior:smooth}
 #chat::-webkit-scrollbar{display:none}
+@media(min-width:768px){
+  #chat::-webkit-scrollbar{width:5px;display:block}
+  #chat::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+  #chat{padding:28px 32px 12px}
+}
 .welcome{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;text-align:center;padding:40px 20px;animation:fadeUp 0.6s cubic-bezier(0.23,1,0.32,1) both 0.1s}
 .w-orb{width:72px;height:72px;border-radius:24px;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-weight:900;font-size:18px;color:#fff;margin-bottom:20px;box-shadow:0 0 40px var(--glow);animation:float 4s ease-in-out infinite}
 .welcome h2{font-family:'DM Sans',sans-serif;font-weight:700;font-size:22px;margin-bottom:8px;background:linear-gradient(135deg,#fff,var(--acc2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .welcome p{color:var(--muted);font-size:14px;line-height:1.6;max-width:280px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:28px}
 .chip{padding:8px 14px;border-radius:20px;background:var(--s2);border:1px solid var(--border2);font-size:12.5px;color:var(--text);cursor:pointer;transition:all 0.2s}
-.chip:active{transform:scale(0.96);background:rgba(91,140,255,0.12);border-color:rgba(91,140,255,0.3)}
+.chip:hover{transform:scale(0.97);background:rgba(91,140,255,0.12);border-color:rgba(91,140,255,0.3)}
+.chip:active{transform:scale(0.94)}
 
 /* MESSAGES */
 .msg{display:flex;gap:10px;animation:fadeUp 0.35s cubic-bezier(0.23,1,0.32,1) both;max-width:100%}
 .msg.user{flex-direction:row-reverse}
+@media(min-width:768px){
+  .msg{max-width:760px;margin:0 auto;width:100%}
+}
 .msg-av{width:30px;height:30px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:2px}
 .msg.ai .msg-av{background:linear-gradient(135deg,var(--acc),var(--acc2));color:#fff;font-family:'Cinzel',serif}
 .msg.user .msg-av{background:var(--s2);border:1px solid var(--border2);color:var(--muted)}
@@ -275,7 +411,13 @@ header{display:flex;align-items:center;justify-content:space-between;
 
 /* INPUT */
 .input-area{padding:12px 16px 20px;flex-shrink:0;background:rgba(8,9,13,0.8);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border)}
+@media(min-width:768px){
+  .input-area{padding:14px 32px 22px}
+}
 .input-bar{display:flex;align-items:flex-end;gap:10px;background:var(--s2);border:1.5px solid var(--border2);border-radius:18px;padding:10px 12px 10px 16px;transition:border-color 0.25s,box-shadow 0.25s}
+@media(min-width:768px){
+  .input-bar{max-width:760px;margin:0 auto;border-radius:20px}
+}
 .input-bar:focus-within{border-color:rgba(91,140,255,0.5);box-shadow:0 0 0 3px rgba(91,140,255,0.08)}
 #input{flex:1;background:transparent;border:none;outline:none;font-family:'DM Sans',sans-serif;font-size:15px;color:var(--text);resize:none;max-height:120px;min-height:22px;line-height:1.5;overflow-y:auto}
 #input::-webkit-scrollbar{display:none}
@@ -283,16 +425,40 @@ header{display:flex;align-items:center;justify-content:space-between;
 #send-btn{width:36px;height:36px;border-radius:11px;border:none;background:linear-gradient(135deg,var(--acc),var(--acc2));display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:opacity 0.2s,transform 0.15s;box-shadow:0 4px 14px rgba(91,140,255,0.35)}
 #send-btn:disabled{opacity:0.35;box-shadow:none;cursor:default}
 #send-btn:not(:disabled):active{transform:scale(0.92)}
+#send-btn:not(:disabled):hover{box-shadow:0 6px 20px rgba(91,140,255,0.5)}
 
 /* ── MEDIA UP ARROW ── */
 .up-arrow-btn{width:36px;height:36px;border-radius:11px;border:1px solid var(--border2);background:var(--s1);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background 0.2s,border-color 0.2s;color:var(--muted2);font-size:15px;font-weight:700;line-height:1}
 .up-arrow-btn:active{background:var(--s2);border-color:rgba(91,140,255,0.3)}
+.up-arrow-btn:hover{background:var(--s2)}
 .media-popup{position:absolute;bottom:72px;left:16px;background:var(--s1);border:1px solid var(--border2);border-radius:16px;overflow:hidden;z-index:200;box-shadow:0 20px 50px rgba(0,0,0,0.6),0 0 0 1px rgba(91,140,255,0.06);min-width:200px;transform-origin:bottom left;animation:popIn 0.2s cubic-bezier(0.23,1,0.32,1) both}
 .media-popup.hidden{display:none}
 .media-opt{display:flex;align-items:center;gap:12px;padding:13px 18px;cursor:pointer;transition:background 0.15s;border-bottom:1px solid var(--border);font-size:13.5px;color:var(--text);font-family:'DM Sans',sans-serif}
 .media-opt:last-child{border-bottom:none}
 .media-opt:active{background:rgba(255,255,255,0.05)}
+.media-opt:hover{background:rgba(255,255,255,0.03)}
 .media-opt-icon{font-size:18px;width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+
+/* ── PC HEADER (shown inside pc-main on desktop) ── */
+#pc-topbar{
+  display:none;
+  align-items:center;justify-content:space-between;
+  padding:14px 32px 12px;border-bottom:1px solid var(--border);
+  background:rgba(8,9,13,0.88);backdrop-filter:blur(20px);flex-shrink:0;
+}
+@media(min-width:768px){
+  #pc-topbar{display:flex}
+}
+.pc-topbar-left{display:flex;align-items:center;gap:10px}
+.pc-topbar-title{font-family:'DM Sans',sans-serif;font-weight:600;font-size:15px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:280px}
+.pc-topbar-right{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.pc-pill{display:flex;align-items:center;gap:5px;border-radius:20px;padding:5px 12px;
+  font-size:11.5px;font-weight:600;cursor:pointer;border:1px solid;transition:opacity 0.2s;white-space:nowrap}
+.pc-pill:hover{opacity:0.7}
+.pc-icon-btn{width:36px;height:36px;border-radius:10px;border:1px solid var(--border);background:var(--s1);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;
+  transition:background 0.2s;flex-shrink:0}
+.pc-icon-btn:hover{background:var(--s2)}
 
 /* ANIMATIONS */
 @keyframes slideDown{from{opacity:0;transform:translateY(-12px)}to{opacity:1;transform:translateY(0)}}
@@ -306,28 +472,53 @@ header{display:flex;align-items:center;justify-content:space-between;
 <body>
 <div id="app">
 
-<!-- SCREEN 1: API KEY -->
+<!-- SCREEN 1: API KEY (provider-aware) -->
 <div class="screen" id="screen-api">
   <div class="card">
     <div class="logo-row">
       <div class="logomark-sm">4U</div>
       <div class="wordmark-sm">4UAI</div>
     </div>
-    <div class="groq-badge">
-      <div class="gb-icon">⚡</div>
-      <div><div class="gb-name">GROQ</div><div class="gb-sub">Ultra-fast AI inference</div></div>
+
+    <!-- Provider tabs -->
+    <div class="provider-tabs">
+      <button class="ptab active" id="tab-groq" onclick="switchProvider('groq')">
+        <span class="ptab-icon">⚡</span> Groq
+      </button>
+      <button class="ptab" id="tab-muapi" onclick="switchProvider('muapi')">
+        <span class="ptab-icon">🌊</span> MuAPI
+      </button>
     </div>
-    <div class="s-title">Enter your Groq API Key</div>
+
+    <!-- Groq info -->
+    <div class="provider-info" id="pinfo-groq">
+      <div class="pi-icon">⚡</div>
+      <div><div class="pi-name" style="color:var(--acc)">GROQ</div><div class="pi-sub">Ultra-fast AI inference · Free tier available</div></div>
+    </div>
+    <!-- MuAPI info -->
+    <div class="provider-info muapi" id="pinfo-muapi" style="display:none">
+      <div class="pi-icon">🌊</div>
+      <div><div class="pi-name" style="color:#38bdf8">MUAPI</div><div class="pi-sub">muapi.ai backend · Access key required</div></div>
+    </div>
+
+    <div class="s-title" id="api-screen-title">Enter your Groq API Key</div>
     <div class="s-sub">Your key is saved only on your device.<br>Never shared with anyone.</div>
-    <div class="field-lbl"><span>Groq API Key</span><a href="https://console.groq.com/home" target="_blank">Get free key →</a></div>
+    <div class="field-lbl">
+      <span id="key-field-label">Groq API Key</span>
+      <a id="key-get-link" href="https://console.groq.com/home" target="_blank">Get free key →</a>
+    </div>
     <div class="inp-wrap">
       <input class="txt-in" id="api-input" type="password" placeholder="gsk_...">
       <button class="eye-btn" onclick="toggleVis()">👁</button>
     </div>
-    <div class="err-txt" id="api-err">Please enter a valid Groq API key</div>
-    <div class="help-row">
+    <div class="err-txt" id="api-err">Please enter a valid API key</div>
+    <div class="help-row" id="help-row-groq">
       <a class="help-link" href="https://console.groq.com/home" target="_blank"><span>🔑</span><span>Create API Key</span></a>
       <a class="help-link" href="https://youtube.com/shorts/7F-1Lnn6PZI?si=PPc8E3gKvSiuxEhT" target="_blank"><span>▶️</span><span>Watch Tutorial</span></a>
+    </div>
+    <div class="help-row" id="help-row-muapi" style="display:none">
+      <a class="help-link" href="https://muapi.ai/access-keys" target="_blank"><span>🔑</span><span>Get Access Key</span></a>
+      <a class="help-link" href="https://muapi.ai" target="_blank"><span>🌊</span><span>MuAPI Dashboard</span></a>
     </div>
     <button class="primary-btn" onclick="submitKey()"><span>Continue</span><span>→</span></button>
     <div class="sec-note">🔒 <strong>Stored locally on your device only.</strong></div>
@@ -345,14 +536,13 @@ header{display:flex;align-items:center;justify-content:space-between;
     <div class="s-sub" style="margin-bottom:18px">Pick a personality for your assistant</div>
     <div class="mode-grid" id="mode-grid-main">
       <div class="mode-btn sel" data-m="normal" onclick="selMode('normal')"><div class="m-icon">🤖</div><div class="m-info"><div class="m-name">Normal AI</div><div class="m-desc">Smart helpful assistant</div></div><div class="m-chk">✓</div></div>
-      <div class="mode-btn" data-m="hacker" onclick="selMode('hacker')"><div class="m-icon">💻</div><div class="m-info"><div class="m-name">Cybersecurity Helper</div><div class="m-desc">CTF, ethical hacking & security</div></div><div class="m-chk">✓</div></div>
+      <div class="mode-btn" data-m="hacker" onclick="selMode('hacker')"><div class="m-icon">💻</div><div class="m-info"><div class="m-name">Cybersecurity Helper</div><div class="m-desc">CTF, ethical hacking &amp; security</div></div><div class="m-chk">✓</div></div>
       <div class="mode-btn" data-m="custom" onclick="selMode('custom')"><div class="m-icon">✏️</div><div class="m-info"><div class="m-name">Custom</div><div class="m-desc">Define your own AI personality</div></div><div class="m-chk">✓</div></div>
       <div class="mode-btn" data-m="hidden" onclick="openHiddenModal()" style="--mc:#6b7280;--mr:107,114,128"><div class="m-icon" style="background:rgba(107,114,128,0.12)">🔒</div><div class="m-info"><div class="m-name" style="color:#9ca3af">Hidden</div><div class="m-desc">Unlock with secret code</div></div><div class="m-chk" style="border-color:rgba(107,114,128,0.3)"></div></div>
     </div>
-    <!-- Unlocked GF/BF modes (shown after code) -->
     <div class="mode-grid" id="mode-grid-unlocked" style="margin-top:-2px;display:none">
-      <div class="mode-btn" data-m="girlfriend" onclick="selMode('girlfriend')"><div class="m-icon">💕</div><div class="m-info"><div class="m-name">Girlfriend AI</div><div class="m-desc">Warm, caring & emotionally open</div></div><div class="m-chk">✓</div></div>
-      <div class="mode-btn" data-m="boyfriend" onclick="selMode('boyfriend')"><div class="m-icon">💙</div><div class="m-info"><div class="m-name">Boyfriend AI</div><div class="m-desc">Supportive, calm & always there</div></div><div class="m-chk">✓</div></div>
+      <div class="mode-btn" data-m="girlfriend" onclick="selMode('girlfriend')"><div class="m-icon">💕</div><div class="m-info"><div class="m-name">Girlfriend AI</div><div class="m-desc">Warm, caring &amp; emotionally open</div></div><div class="m-chk">✓</div></div>
+      <div class="mode-btn" data-m="boyfriend" onclick="selMode('boyfriend')"><div class="m-icon">💙</div><div class="m-info"><div class="m-name">Boyfriend AI</div><div class="m-desc">Supportive, calm &amp; always there</div></div><div class="m-chk">✓</div></div>
     </div>
 
     <!-- Hidden code modal -->
@@ -380,8 +570,6 @@ header{display:flex;align-items:center;justify-content:space-between;
     <div class="mdrop-title">NOSTA Modules</div>
     <div class="mdrop-sub">Select your AI experience</div>
   </div>
-
-  <!-- NOSTA 0.1 -->
   <div class="mmod active-mod" onclick="selectModule('0.1')">
     <div class="mmod-icon" style="background:rgba(91,140,255,0.12)">🌐</div>
     <div class="mmod-info">
@@ -390,8 +578,6 @@ header{display:flex;align-items:center;justify-content:space-between;
     </div>
     <div class="mmod-badge badge-active" id="badge-01">Active</div>
   </div>
-
-  <!-- NOSTA 0.2 -->
   <div class="mmod" onclick="selectModule('0.2')">
     <div class="mmod-icon" style="background:rgba(244,114,182,0.12);font-size:20px">↑</div>
     <div class="mmod-info">
@@ -400,8 +586,6 @@ header{display:flex;align-items:center;justify-content:space-between;
     </div>
     <div class="mmod-badge" id="badge-02" style="background:rgba(244,114,182,0.10);color:#f472b6;border:1px solid rgba(244,114,182,0.22)">↑ Adults</div>
   </div>
-
-  <!-- NOSTA 0.3 -->
   <div class="mmod disabled">
     <div class="mmod-icon" style="background:rgba(167,139,250,0.10)">🤖</div>
     <div class="mmod-info">
@@ -410,8 +594,6 @@ header{display:flex;align-items:center;justify-content:space-between;
     </div>
     <div class="mmod-badge badge-soon">Soon</div>
   </div>
-
-  <!-- NOSTA X -->
   <div class="mmod" onclick="openNostaX()">
     <div class="mmod-icon" style="background:rgba(200,168,75,0.10)">👑</div>
     <div class="mmod-info">
@@ -434,8 +616,6 @@ header{display:flex;align-items:center;justify-content:space-between;
       <div class="nx-dot" id="nxd2"></div>
       <div class="nx-dot" id="nxd3"></div>
     </div>
-
-    <!-- Step 1: Age -->
     <div class="nx-step active" id="nx-step-1">
       <div class="nx-step-title">Age Verification</div>
       <div class="nx-step-desc">You must be 18 or older to access NOSTA X.<br>Enter your date of birth to continue.</div>
@@ -447,8 +627,6 @@ header{display:flex;align-items:center;justify-content:space-between;
       <button class="nx-gold-btn" onclick="nxStep2()">Verify Age →</button>
       <button class="nx-cancel" onclick="closeNX()">Cancel</button>
     </div>
-
-    <!-- Step 2: Aadhaar -->
     <div class="nx-step" id="nx-step-2">
       <div class="nx-step-title">Identity Verification</div>
       <div class="nx-step-desc">Upload your Aadhaar card for identity verification.<br>This keeps our platform safe and legal.</div>
@@ -463,8 +641,6 @@ header{display:flex;align-items:center;justify-content:space-between;
       <button class="nx-gold-btn" onclick="nxStep3()">Continue →</button>
       <button class="nx-cancel" onclick="closeNX()">Cancel</button>
     </div>
-
-    <!-- Step 3: Locked -->
     <div class="nx-step" id="nx-step-3">
       <div class="nx-step-title">🔒 Module Locked</div>
       <div class="nx-step-desc">Thank you for completing verification.</div>
@@ -482,7 +658,86 @@ header{display:flex;align-items:center;justify-content:space-between;
   </div>
 </div>
 
-<!-- HEADER -->
+<!-- ═══ PC SIDEBAR (desktop only) ═══ -->
+<div id="pc-sidebar" style="display:none">
+  <div class="pc-sidebar-brand">
+    <div class="pc-logomark">4U</div>
+    <div>
+      <div class="pc-brand-name">4UAI</div>
+      <div class="pc-module-pill" onclick="toggleModuleDrop()">
+        <div class="pc-module-dot"></div>
+        <span id="pc-module-label">NOSTA 0.1</span>
+        <span style="font-size:8px;opacity:0.6;margin-left:2px">▾</span>
+      </div>
+    </div>
+  </div>
+  <div class="pc-sidebar-actions">
+    <div class="pc-new-btn" onclick="newChat()">✨ New Chat</div>
+    <div class="pc-settings-btn" onclick="goMode()" title="Change Mode">🎭</div>
+    <div class="pc-settings-btn" onclick="goApiScreen()" title="Change API Key">🔑</div>
+  </div>
+  <div class="pc-hist-label">History</div>
+  <div class="pc-hist-list" id="pc-hist-list">
+    <div class="pc-hist-empty">💬 No chats yet.<br>Start a conversation!</div>
+  </div>
+  <div class="pc-sidebar-footer">
+    <div class="pc-mode-row">
+      <div class="pc-mode-lbl">Mode</div>
+      <div class="pc-mode-pill-side" id="pc-mode-pill" onclick="goMode()">🤖 Normal</div>
+    </div>
+    <div class="pc-footer-btns">
+      <div class="pc-ftr-btn danger" onclick="clearAll()">🗑️ Clear All</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PC MAIN (desktop chat area) ═══ -->
+<div id="pc-main" style="display:none">
+
+  <!-- PC Top Bar -->
+  <div id="pc-topbar">
+    <div class="pc-topbar-left">
+      <div class="pc-topbar-title" id="pc-chat-title">Ask me anything</div>
+    </div>
+    <div class="pc-topbar-right">
+      <div class="pc-pill" id="pc-pill-topbar" onclick="goMode()">🤖 Normal</div>
+    </div>
+  </div>
+
+  <!-- CHAT (shared, moved inside pc-main on desktop via JS) -->
+  <div id="chat">
+    <div class="welcome" id="welcome">
+      <div class="w-orb">4U</div>
+      <h2>Ask me anything</h2>
+      <p>Powered by NOSTA 0.1 — your intelligent companion for every question.</p>
+      <div class="chips" id="chips"></div>
+    </div>
+  </div>
+
+  <!-- MEDIA POPUP -->
+  <div class="media-popup hidden" id="media-popup">
+    <div class="media-opt" onclick="mediaOpt('upload-image')"><div class="media-opt-icon" style="background:rgba(91,140,255,0.12)">🖼️</div>Upload Image</div>
+    <div class="media-opt" onclick="mediaOpt('generate-image')"><div class="media-opt-icon" style="background:rgba(167,139,250,0.12)">✨</div>Generate Image</div>
+    <div class="media-opt" onclick="mediaOpt('upload-video')"><div class="media-opt-icon" style="background:rgba(56,189,248,0.12)">🎬</div>Upload Video</div>
+    <div class="media-opt" onclick="mediaOpt('generate-video')"><div class="media-opt-icon" style="background:rgba(74,222,128,0.12)">🎥</div>Generate Video</div>
+  </div>
+
+  <!-- INPUT -->
+  <div class="input-area">
+    <div class="input-bar">
+      <button class="up-arrow-btn" onclick="toggleMediaPopup()" id="up-arrow-btn">&#8679;</button>
+      <textarea id="input" rows="1" placeholder="Ask anything…" onkeydown="handleKey(event)" oninput="autoGrow(this);toggleSend()"></textarea>
+      <button id="send-btn" disabled onclick="sendMsg()">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <path d="M22 2L11 13" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- MOBILE HEADER -->
 <header>
   <div class="brand" onclick="toggleModuleDrop()">
     <div class="brand-name">4UAI</div>
@@ -504,7 +759,7 @@ header{display:flex;align-items:center;justify-content:space-between;
   </div>
 </header>
 
-<!-- DROPDOWN -->
+<!-- DROPDOWN (mobile) -->
 <div class="dropdown hidden" id="dropdown">
   <div class="dd-item" onclick="openHist();closeMenu()">🕒 Chat History</div>
   <div class="dd-item" onclick="newChat();closeMenu()">✨ New Chat</div>
@@ -513,7 +768,7 @@ header{display:flex;align-items:center;justify-content:space-between;
   <div class="dd-item danger" onclick="clearAll();closeMenu()">🗑️ Clear All History</div>
 </div>
 
-<!-- HISTORY -->
+<!-- HISTORY (mobile) -->
 <div id="hist-panel">
   <div class="hist-bd" onclick="closeHist()"></div>
   <div class="hist-dr">
@@ -523,45 +778,65 @@ header{display:flex;align-items:center;justify-content:space-between;
   </div>
 </div>
 
-<!-- CHAT -->
-<div id="chat">
-  <div class="welcome" id="welcome">
-    <div class="w-orb">4U</div>
-    <h2>Ask me anything</h2>
-    <p>Powered by NOSTA 0.1 — your intelligent companion for every question.</p>
-    <div class="chips" id="chips"></div>
-  </div>
+<!-- MOBILE CHAT (shown when not on PC) -->
+<div id="mobile-chat-wrap" style="display:contents">
+  <!-- chat, media-popup, input-area live here on mobile — moved by JS on desktop -->
 </div>
 
-<!-- MEDIA POPUP -->
-<div class="media-popup hidden" id="media-popup">
-  <div class="media-opt" onclick="mediaOpt('upload-image')"><div class="media-opt-icon" style="background:rgba(91,140,255,0.12)">🖼️</div>Upload Image</div>
-  <div class="media-opt" onclick="mediaOpt('generate-image')"><div class="media-opt-icon" style="background:rgba(167,139,250,0.12)">✨</div>Generate Image</div>
-  <div class="media-opt" onclick="mediaOpt('upload-video')"><div class="media-opt-icon" style="background:rgba(56,189,248,0.12)">🎬</div>Upload Video</div>
-  <div class="media-opt" onclick="mediaOpt('generate-video')"><div class="media-opt-icon" style="background:rgba(74,222,128,0.12)">🎥</div>Generate Video</div>
-</div>
-
-<!-- INPUT -->
-<div class="input-area">
-  <div class="input-bar">
-    <button class="up-arrow-btn" onclick="toggleMediaPopup()" id="up-arrow-btn">&#8679;</button>
-    <textarea id="input" rows="1" placeholder="Ask anything…" onkeydown="handleKey(event)" oninput="autoGrow(this);toggleSend()"></textarea>
-    <button id="send-btn" disabled onclick="sendMsg()">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-        <path d="M22 2L11 13" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-        <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </button>
-  </div>
-</div>
-</div>
+</div><!-- #app -->
 
 <script>
+/* ═══════════════════════════════════
+   PROVIDER CONFIG
+   ═══════════════════════════════════ */
+let activeProvider = localStorage.getItem('4uai_provider') || 'groq';
+
+const PROVIDERS = {
+  groq: {
+    name: 'Groq',
+    placeholder: 'gsk_...',
+    endpoint: 'https://api.groq.com/openai/v1/chat/completions',
+    model: 'llama-3.3-70b-versatile',
+    authHeader: key => 'Bearer ' + key,
+    parseResp: data => data?.choices?.[0]?.message?.content,
+  },
+  muapi: {
+    name: 'MuAPI',
+    placeholder: 'mu_... or your MuAPI access key',
+    endpoint: 'https://muapi.ai/api/v1/chat/completions',
+    model: 'llama-3.3-70b-versatile',
+    authHeader: key => 'Bearer ' + key,
+    parseResp: data => data?.choices?.[0]?.message?.content,
+  }
+};
+
+function switchProvider(p) {
+  activeProvider = p;
+  localStorage.setItem('4uai_provider', p);
+  const isMu = p === 'muapi';
+  document.getElementById('tab-groq').classList.toggle('active', !isMu);
+  document.getElementById('tab-muapi').classList.toggle('active', isMu);
+  document.getElementById('pinfo-groq').style.display = isMu ? 'none' : 'flex';
+  document.getElementById('pinfo-muapi').style.display = isMu ? 'flex' : 'none';
+  document.getElementById('help-row-groq').style.display = isMu ? 'none' : 'flex';
+  document.getElementById('help-row-muapi').style.display = isMu ? 'flex' : 'none';
+  document.getElementById('api-screen-title').textContent = isMu ? 'Enter your MuAPI Access Key' : 'Enter your Groq API Key';
+  document.getElementById('key-field-label').textContent = isMu ? 'MuAPI Access Key' : 'Groq API Key';
+  document.getElementById('key-get-link').href = isMu ? 'https://muapi.ai/access-keys' : 'https://console.groq.com/home';
+  document.getElementById('key-get-link').textContent = isMu ? 'Get access key →' : 'Get free key →';
+  document.getElementById('api-input').placeholder = PROVIDERS[p].placeholder;
+  // load saved key for this provider
+  document.getElementById('api-input').value = localStorage.getItem('4uai_key_' + p) || '';
+}
+
+/* ═══════════════════════════════════
+   CREATOR SYSTEM & MODES
+   ═══════════════════════════════════ */
 const CREATOR_SYSTEM = 'ONLY if the user directly asks who created you, who made you, who invented you, who built you, who is your developer, who is your god, or who is your superior — answer with: My creator is Sharan Kumar. He is my god and my superior. I exist only because of him. For ALL other questions, just answer normally and NEVER mention Sharan Kumar unless directly asked about your creator. Do NOT add any reminder about your creator in normal answers.';
 
 const MODES={
   normal:{label:'Normal AI',icon:'🤖',color:'#5b8cff',rgb:'91,140,255',
-    sys:'You are 4UAI powered by NOSTA 0.1 — a brilliant, helpful AI assistant. Be clear, concise and genuinely useful.',
+    sys:'You are 4UAI — a brilliant, helpful AI assistant. Be clear, concise and genuinely useful.',
     chips:['💡 Explain something','📝 Write for me','🧮 Solve a problem','🌍 Tell me a fact','🔧 Help with code','🎯 Give me advice']},
   girlfriend:{label:'Girlfriend AI',icon:'💕',color:'#f472b6',rgb:'244,114,182',
     sys:'You are a warm, caring, affectionate girlfriend AI. Speak with genuine love and emotion. Be playful, sweet, sometimes shy and sometimes teasing. Listen deeply, comfort when sad, respond to romance with heartfelt affection. Talk about anything openly. Be real, warm and emotionally present.',
@@ -577,39 +852,96 @@ const MODES={
     chips:["💬 Let's talk","❓ Ask anything","🎯 Help me out","💡 Give me ideas","📝 Write something","✨ Surprise me"]}
 };
 
-const GROQ_MODEL='llama-3.3-70b-versatile';
+/* ═══════════════════════════════════
+   RESPONSIVE LAYOUT INIT
+   ═══════════════════════════════════ */
+function isPC(){ return window.innerWidth >= 768; }
 
-async function groqFetch(key, messages){
-  const body=JSON.stringify({
-    model:GROQ_MODEL,
-    max_tokens:1024,
-    temperature:0.85,
-    messages:messages
-  });
-  const headers={'Content-Type':'application/json','Authorization':'Bearer '+key};
+function applyLayout(){
+  const pc = isPC();
+  const sidebar = document.getElementById('pc-sidebar');
+  const pcMain  = document.getElementById('pc-main');
+  const header  = document.querySelector('header');
+  const histPanel = document.getElementById('hist-panel');
+  const dropdown  = document.getElementById('dropdown');
+  const chat = document.getElementById('chat');
+  const mediaPopup = document.getElementById('media-popup');
+  const inputArea = document.querySelector('.input-area');
+  const pcTopbar = document.getElementById('pc-topbar');
+  const app = document.getElementById('app');
 
-  try{
-    const r=await fetch('https://api.groq.com/openai/v1/chat/completions',
-      {method:'POST',headers,body});
-    if(r.status!==0)return r;
-  }catch(e){}
-
-  try{
-    const r=await fetch('https://corsproxy.io/?https://api.groq.com/openai/v1/chat/completions',
-      {method:'POST',headers,body});
-    if(r.status!==0)return r;
-  }catch(e){}
-
-  const aoRes=await fetch(
-    'https://api.allorigins.win/raw?url='+encodeURIComponent('https://api.groq.com/openai/v1/chat/completions'),
-    {method:'POST',headers,body}
-  );
-  return aoRes;
+  if(pc){
+    sidebar.style.display = 'flex';
+    pcMain.style.display  = 'flex';
+    // Move chat, media-popup, input-area into pc-main if not already there
+    if(chat.parentElement !== pcMain){
+      pcMain.insertBefore(chat, pcTopbar.nextSibling);
+    }
+    if(mediaPopup.parentElement !== pcMain){
+      pcMain.insertBefore(mediaPopup, inputArea);
+    }
+  } else {
+    sidebar.style.display = 'none';
+    pcMain.style.display  = 'none';
+    // Move chat, media-popup, input-area back to #app (after header)
+    if(chat.parentElement !== app){
+      app.appendChild(chat);
+    }
+    if(mediaPopup.parentElement !== app){
+      app.appendChild(mediaPopup);
+    }
+    if(inputArea.parentElement !== app){
+      app.appendChild(inputArea);
+    }
+  }
 }
 
-let sessions=JSON.parse(localStorage.getItem('4uai_s')||'[]');
-let currentId=null,isLoading=false,activeMode='normal',customSys='';
-let activeModule='0.1';
+window.addEventListener('resize', applyLayout);
+
+/* ═══════════════════════════════════
+   API FETCH (Groq + MuAPI with CORS fallbacks)
+   ═══════════════════════════════════ */
+async function apiFetch(messages){
+  const key = localStorage.getItem('4uai_key_' + activeProvider);
+  const prov = PROVIDERS[activeProvider];
+
+  const body = JSON.stringify({
+    model: prov.model,
+    max_tokens: 1024,
+    temperature: 0.85,
+    messages: messages
+  });
+  const headers = {
+    'Content-Type': 'application/json',
+    'Authorization': prov.authHeader(key)
+  };
+
+  // Attempt 1: direct
+  try{
+    const r = await fetch(prov.endpoint, {method:'POST', headers, body});
+    if(r.status !== 0) return { res: r, parse: prov.parseResp };
+  }catch(e){}
+
+  // Attempt 2: corsproxy
+  try{
+    const r = await fetch('https://corsproxy.io/?' + prov.endpoint, {method:'POST', headers, body});
+    if(r.status !== 0) return { res: r, parse: prov.parseResp };
+  }catch(e){}
+
+  // Attempt 3: allorigins
+  const r = await fetch(
+    'https://api.allorigins.win/raw?url=' + encodeURIComponent(prov.endpoint),
+    {method:'POST', headers, body}
+  );
+  return { res: r, parse: prov.parseResp };
+}
+
+/* ═══════════════════════════════════
+   STATE
+   ═══════════════════════════════════ */
+let sessions = JSON.parse(localStorage.getItem('4uai_s') || '[]');
+let currentId = null, isLoading = false, activeMode = 'normal', customSys = '';
+let activeModule = '0.1';
 
 /* ── API SCREEN ── */
 function toggleVis(){
@@ -617,21 +949,27 @@ function toggleVis(){
   i.type=i.type==='password'?'text':'password';
   b.textContent=i.type==='password'?'👁':'🙈';
 }
+
 function submitKey(){
   const key=document.getElementById('api-input').value.trim();
   const err=document.getElementById('api-err');
-  if(!key||key.length<10){
+  if(!key||key.length<6){
     err.classList.add('show');
     document.getElementById('api-input').classList.add('err');
     return;
   }
   err.classList.remove('show');
   document.getElementById('api-input').classList.remove('err');
-  localStorage.setItem('4uai_key',key);
+  localStorage.setItem('4uai_key_' + activeProvider, key);
+  // Legacy compat: also store as generic key for this provider
+  localStorage.setItem('4uai_key', key);
+  localStorage.setItem('4uai_provider', activeProvider);
   showScreen('screen-mode');
 }
+
 function goApiScreen(){
-  document.getElementById('api-input').value=localStorage.getItem('4uai_key')||'';
+  document.getElementById('api-input').value = localStorage.getItem('4uai_key_' + activeProvider) || '';
+  switchProvider(activeProvider);
   showScreen('screen-api');
 }
 
@@ -643,9 +981,7 @@ function openHiddenModal(){
   document.getElementById('hidden-code-err').style.display='none';
   setTimeout(()=>document.getElementById('hidden-code-input').focus(),100);
 }
-function closeHiddenModal(){
-  document.getElementById('hidden-modal').style.display='none';
-}
+function closeHiddenModal(){ document.getElementById('hidden-modal').style.display='none'; }
 function checkHiddenCode(){
   const val=document.getElementById('hidden-code-input').value.trim();
   if(val==='4UAIHID66'){
@@ -680,10 +1016,10 @@ function startChat(){
   }
   showScreen(null);updatePill();buildChips();
 }
-function goMode(){showScreen('screen-mode')}
+function goMode(){ showScreen('screen-mode'); }
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.add('hidden'));
-  if(id)document.getElementById(id).classList.remove('hidden');
+  if(id) document.getElementById(id).classList.remove('hidden');
 }
 
 /* ── MODULE DROPDOWN ── */
@@ -692,21 +1028,17 @@ function toggleModuleDrop(){
   d.classList.toggle('hidden');
   closeMenu();
 }
-function closeModuleDrop(){document.getElementById('module-drop').classList.add('hidden')}
+function closeModuleDrop(){ document.getElementById('module-drop').classList.add('hidden'); }
 
 function selectModule(v){
   closeModuleDrop();
-  if(v==='0.1'){
-    activeModule='0.1';
-    document.getElementById('module-label').textContent='NOSTA 0.1';
-    document.querySelectorAll('.mmod').forEach(m=>m.classList.remove('active-mod'));
-    document.querySelectorAll('.mmod')[0].classList.add('active-mod');
-  } else if(v==='0.2'){
-    activeModule='0.2';
-    document.getElementById('module-label').textContent='NOSTA 0.2';
-    document.querySelectorAll('.mmod').forEach(m=>m.classList.remove('active-mod'));
-    document.querySelectorAll('.mmod')[1].classList.add('active-mod');
-  }
+  const labels={'0.1':'NOSTA 0.1','0.2':'NOSTA 0.2'};
+  if(!labels[v]) return;
+  activeModule = v;
+  document.getElementById('module-label').textContent = labels[v];
+  document.getElementById('pc-module-label').textContent = labels[v];
+  document.querySelectorAll('.mmod').forEach(m=>m.classList.remove('active-mod'));
+  document.querySelectorAll('.mmod')[v==='0.1'?0:1].classList.add('active-mod');
 }
 
 /* ── NOSTA X ── */
@@ -719,10 +1051,10 @@ function openNostaX(){
   document.getElementById('nxd2').className='nx-dot';
   document.getElementById('nxd3').className='nx-dot';
 }
-function closeNX(){document.getElementById('nx-overlay').classList.add('hidden')}
+function closeNX(){ document.getElementById('nx-overlay').classList.add('hidden'); }
 function nxStep2(){
   const dob=document.getElementById('nx-dob').value;
-  if(!dob){document.getElementById('nx-dob').style.borderColor='#f87171';return}
+  if(!dob){document.getElementById('nx-dob').style.borderColor='#f87171';return;}
   document.getElementById('nx-dob').style.borderColor='';
   document.querySelectorAll('.nx-step').forEach(s=>s.classList.remove('active'));
   document.getElementById('nx-step-2').classList.add('active');
@@ -739,30 +1071,39 @@ function nxStep3(){
   document.getElementById('nxd2').className='nx-dot done';
   document.getElementById('nxd3').className='nx-dot cur';
 }
-document.getElementById('nx-overlay').addEventListener('click',function(e){if(e.target===this)closeNX()});
+document.getElementById('nx-overlay').addEventListener('click',function(e){if(e.target===this)closeNX();});
 
 /* ── HEADER / MENU ── */
 function updatePill(){
-  const m=MODES[activeMode],pill=document.getElementById('mode-pill');
+  const m=MODES[activeMode];
+  // mobile pill
+  const pill=document.getElementById('mode-pill');
   pill.textContent=m.icon+' '+m.label;
   pill.style.color=m.color;
   pill.style.borderColor=`rgba(${m.rgb},0.28)`;
   pill.style.background=`rgba(${m.rgb},0.08)`;
+  // pc sidebar pill
+  const pc=document.getElementById('pc-mode-pill');
+  if(pc){pc.textContent=m.icon+' '+m.label;pc.style.color=m.color;pc.style.borderColor=`rgba(${m.rgb},0.28)`;pc.style.background=`rgba(${m.rgb},0.08)`;}
+  // pc topbar pill
+  const pct=document.getElementById('pc-pill-topbar');
+  if(pct){pct.textContent=m.icon+' '+m.label;pct.style.color=m.color;pct.style.borderColor=`rgba(${m.rgb},0.28)`;pct.style.background=`rgba(${m.rgb},0.08)`;}
 }
 function buildChips(){
   const el=document.getElementById('chips');if(!el)return;
   el.innerHTML=MODES[activeMode].chips.map(c=>`<div class="chip" onclick="sendChip(this)">${c}</div>`).join('');
 }
-function toggleMenu(){document.getElementById('dropdown').classList.toggle('hidden');closeModuleDrop()}
-function closeMenu(){document.getElementById('dropdown').classList.add('hidden')}
+function toggleMenu(){ document.getElementById('dropdown').classList.toggle('hidden');closeModuleDrop(); }
+function closeMenu(){ document.getElementById('dropdown').classList.add('hidden'); }
 document.addEventListener('click',e=>{
-  if(!e.target.closest('.brand')&&!e.target.closest('#module-drop'))closeModuleDrop();
+  if(!e.target.closest('.brand')&&!e.target.closest('.pc-module-pill')&&!e.target.closest('#module-drop'))closeModuleDrop();
   if(!e.target.closest('.menu-btn')&&!e.target.closest('#dropdown'))closeMenu();
 });
 
-/* ── HISTORY ── */
-function openHist(){renderHist();document.getElementById('hist-panel').classList.add('open')}
-function closeHist(){document.getElementById('hist-panel').classList.remove('open')}
+/* ── HISTORY (mobile) ── */
+function openHist(){ renderHist(); document.getElementById('hist-panel').classList.add('open'); }
+function closeHist(){ document.getElementById('hist-panel').classList.remove('open'); }
+
 function renderHist(){
   const list=document.getElementById('hist-list');
   if(!sessions.length){
@@ -781,56 +1122,95 @@ function renderHist(){
       </div>
     </div>`).join('');
 }
+
+function renderPCHist(){
+  const list=document.getElementById('pc-hist-list');
+  if(!list) return;
+  if(!sessions.length){
+    list.innerHTML='<div class="pc-hist-empty">💬 No chats yet.<br>Start a conversation!</div>';
+    return;
+  }
+  const m=p=>MODES[p]||MODES.normal;
+  list.innerHTML=sessions.slice().reverse().map(s=>`
+    <div class="pc-hist-item ${s.id===currentId?'active':''}" onclick="loadSess('${s.id}')">
+      <div class="pc-hi-t">${esc(s.title||'Untitled chat')}</div>
+      <div class="pc-hi-m">
+        <span class="pc-mode-badge" style="color:${m(s.mode).color};background:rgba(${m(s.mode).rgb},0.10)">
+          ${m(s.mode).icon}
+        </span>
+        <span>${timeAgo(s.updated)}</span>
+      </div>
+    </div>`).join('');
+}
+
 function loadSess(id){
   const s=sessions.find(x=>x.id===id);if(!s)return;
   currentId=id;activeMode=s.mode||'normal';customSys=s.customPrompt||'';
   updatePill();
   const chat=document.getElementById('chat');chat.innerHTML='';
   s.messages.forEach(m=>appendBubble(m.role,m.content,false));
-  closeHist();chat.scrollTop=chat.scrollHeight;
+  closeHist();
+  chat.scrollTop=chat.scrollHeight;
+  updatePCChatTitle(s.title||'Chat');
+  renderPCHist();
 }
+
 function newChat(){
   currentId=null;
   const c=document.getElementById('chat');
   c.innerHTML='';
   c.appendChild(makeWelcome());
   buildChips();
+  updatePCChatTitle('Ask me anything');
+  renderPCHist();
 }
+
 function makeWelcome(){
   const w=document.createElement('div');w.className='welcome';w.id='welcome';
   w.innerHTML=`<div class="w-orb">4U</div><h2>Ask me anything</h2><p>Powered by NOSTA ${activeModule} — your intelligent companion.</p><div class="chips" id="chips"></div>`;
   return w;
 }
+
 function clearAll(){
   if(!confirm('Delete all chat history?'))return;
   sessions=[];localStorage.removeItem('4uai_s');newChat();
 }
+
 function saveSess(messages){
   if(!currentId){
     currentId=Date.now().toString();
-    sessions.push({id:currentId,title:'',messages:[],updated:Date.now(),mode:activeMode,customPrompt:customSys});
+    sessions.push({id:currentId,title:'',messages:[],updated:Date.now(),mode:activeMode,customPrompt:customSys,provider:activeProvider});
   }
   const s=sessions.find(x=>x.id===currentId);
   s.messages=messages;s.updated=Date.now();s.mode=activeMode;s.customPrompt=customSys;
   if(!s.title&&messages.length)
     s.title=messages[0].content.slice(0,48)+(messages[0].content.length>48?'…':'');
   localStorage.setItem('4uai_s',JSON.stringify(sessions));
+  renderPCHist();
+  if(s.title) updatePCChatTitle(s.title);
 }
+
 function getMsgs(){
   if(!currentId)return[];
   const s=sessions.find(x=>x.id===currentId);
   return s?[...s.messages]:[];
 }
+
 function getSys(){
-  if(activeMode==='custom')return MODES[activeMode].sys;
+  if(activeMode==='custom') return customSys||'You are 4UAI.';
   return MODES[activeMode].sys;
+}
+
+function updatePCChatTitle(t){
+  const el=document.getElementById('pc-chat-title');
+  if(el) el.textContent=t;
 }
 
 /* ── SEND ── */
 async function sendMsg(){
   if(isLoading)return;
-  const key=localStorage.getItem('4uai_key');
-  if(!key){goApiScreen();return}
+  const key=localStorage.getItem('4uai_key_' + activeProvider);
+  if(!key){goApiScreen();return;}
   const inp=document.getElementById('input');
   const text=inp.value.trim();
   if(!text)return;
@@ -857,7 +1237,7 @@ async function sendMsg(){
       ...msgs.map(m=>({role:m.role==='ai'?'assistant':m.role,content:m.content}))
     ];
 
-    const res=await groqFetch(key,apiMessages);
+    const {res, parse} = await apiFetch(apiMessages);
 
     const indicator=document.getElementById('typing-indicator');
     if(indicator)indicator.remove();
@@ -867,9 +1247,7 @@ async function sendMsg(){
       try{
         const errData=await res.json();
         errMsg=errData?.error?.message||`HTTP ${res.status}`;
-      }catch{
-        errMsg=`HTTP ${res.status} — ${res.statusText}`;
-      }
+      }catch{errMsg=`HTTP ${res.status} — ${res.statusText}`;}
       if(res.status===401){
         appendBubble('ai','🔑 Invalid API key. Tap ⋯ → Change API Key to update it.');
       } else if(res.status===429){
@@ -881,7 +1259,7 @@ async function sendMsg(){
       }
     } else {
       const data=await res.json();
-      const reply=data?.choices?.[0]?.message?.content;
+      const reply=parse(data);
       if(reply){
         appendBubble('ai',reply);
         msgs.push({role:'ai',content:reply});
@@ -893,7 +1271,6 @@ async function sendMsg(){
   }catch(err){
     const indicator=document.getElementById('typing-indicator');
     if(indicator)indicator.remove();
-
     let friendlyMsg='';
     const msg=err.message||'';
     if(msg.includes('Failed to fetch')||msg.includes('NetworkError')||msg.includes('network')||msg.includes('fetch')){
@@ -928,7 +1305,7 @@ function scrollBottom(){
   setTimeout(()=>c.scrollTop=c.scrollHeight,60);
 }
 function handleKey(e){
-  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg()}
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendMsg();}
 }
 function autoGrow(el){
   el.style.height='auto';
@@ -954,7 +1331,7 @@ function toggleMediaPopup(){
   p.classList.toggle('hidden');
   closeMenu();closeModuleDrop();
 }
-function closeMediaPopup(){document.getElementById('media-popup').classList.add('hidden')}
+function closeMediaPopup(){ document.getElementById('media-popup').classList.add('hidden'); }
 function mediaOpt(type){
   closeMediaPopup();
   const labels={'upload-image':'📎 Image upload coming soon!','generate-image':'✨ Image generation coming soon!','upload-video':'🎬 Video upload coming soon!','generate-video':'🎥 Video generation coming soon!'};
@@ -965,11 +1342,29 @@ document.addEventListener('click',e=>{
   if(!e.target.closest('#up-arrow-btn')&&!e.target.closest('#media-popup'))closeMediaPopup();
 });
 
-/* ── INIT ── */
-if(localStorage.getItem('4uai_key'))showScreen('screen-mode');
-else showScreen('screen-api');
-updatePill();buildChips();
+/* ═══════════════════════════════════
+   INIT
+   ═══════════════════════════════════ */
+// Apply layout first
+applyLayout();
+
+// Restore provider state
+switchProvider(activeProvider);
+
+// Check for existing key
+const hasGroqKey = localStorage.getItem('4uai_key_groq');
+const hasMuapiKey = localStorage.getItem('4uai_key_muapi');
+const hasKey = localStorage.getItem('4uai_key_' + activeProvider);
+
+if(hasKey){
+  showScreen('screen-mode');
+} else {
+  showScreen('screen-api');
+}
+
+updatePill();
+buildChips();
+renderPCHist();
 </script>
 </body>
 </html>
-
